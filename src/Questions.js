@@ -23,7 +23,7 @@ const questions = [
         questionKey: "midCriteria",
         answerOptions: [
             { displayText: "Buts", answerValue: "goals"}, 
-            { displayText: "Assists", answerValue: "xA"}, 
+            { displayText: "Assists", answerValue: "assists"}, 
             { displayText: "Performance défensive", answerValue: "def_score"}, 
         ]
     },
