@@ -159,11 +159,22 @@ function App() {
 
       {/* Suggested team */}
       <div>
-        {suggestedTeam.length > 0 &&
-          suggestedTeam.map(player => (
-            <p key={player.player_name}>{player.player_name}</p>
-          ))
-        }
+        <table>
+          <tr>
+            <th>Player</th>
+            <th>Price</th>
+            <th>Bid</th>
+          </tr>
+          {suggestedTeam.length > 0 &&
+            suggestedTeam.map(player => (
+              <tr key={player.player_name}>
+                <td > {player.player_name} </td>
+                <td > {player.price} </td>
+                <td > {player.bid} </td>
+              </tr>
+            ))
+          }
+        </table>
       </div>
     </div>
   )
