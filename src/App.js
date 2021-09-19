@@ -43,7 +43,7 @@ function App() {
       redirect: 'follow'
     };
 
-    fetch("http://18.117.140.191:8080/opt", requestOptions)
+    fetch("https://nrkf97hvad.execute-api.us-east-2.amazonaws.com/preproduction/opt", requestOptions)
       .then(response => response.json())
       .then(data => {
         setSuggestedTeam(data);
