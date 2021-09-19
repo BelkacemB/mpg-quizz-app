@@ -14,8 +14,10 @@ const questions = [
         questionKey: "attCriteria",
         answerOptions: [
             { displayText: "Buts", answerValue: "goals"}, 
+            { displayText: "Assists", answerValue: "assists"}, 
+            { displayText: "Performance défensive", answerValue: "def_score"}, 
             { displayText: "Expected goals", answerValue: "xG"}, 
-            { displayText: "Buts et assists", answerValue: "expected_output"}, 
+            { displayText: "Expected output", answerValue: "expected_output"}, 
         ]
     }, 
     {
@@ -23,16 +25,21 @@ const questions = [
         questionKey: "midCriteria",
         answerOptions: [
             { displayText: "Buts", answerValue: "goals"}, 
+            { displayText: "Expected goals", answerValue: "xG"}, 
             { displayText: "Assists", answerValue: "assists"}, 
             { displayText: "Performance défensive", answerValue: "def_score"}, 
+            { displayText: "Expected output", answerValue: "expected_output"}
         ]
     },
     {
         questionText: "Critère pour les défenseurs:",
         questionKey: "defCriteria",
         answerOptions: [
+            { displayText: "Buts", answerValue: "goals"}, 
+            { displayText: "Expected goals", answerValue: "xG"}, 
+            { displayText: "Assists", answerValue: "assists"}, 
             { displayText: "Performance défensive", answerValue: "def_score"}, 
-            { displayText: "Buts et assists", answerValue: "expected_output"}, 
+            { displayText: "Expected output", answerValue: "expected_output"}
         ]
     }
 ]
