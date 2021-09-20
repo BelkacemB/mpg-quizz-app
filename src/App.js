@@ -28,6 +28,12 @@ function App() {
     setUserPrefs({ ...userPrefs, ...updatedValue })
   }
 
+  const handleSlideChange = (...event) => {
+    let updatedValue = {}
+    updatedValue['init_budget'] = event[1]
+    setUserPrefs({ ...userPrefs, ...updatedValue })
+  }
+
   const handlePrefSubmit = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -87,7 +93,7 @@ function App() {
             marks
             min={100}
             max={500}
-            onChange={handleChange}
+            onChangeCommitted={handleSlideChange}
             name="init_budget"
           />
         </div>
