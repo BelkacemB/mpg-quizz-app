@@ -7,6 +7,13 @@ function App() {
 
   const qs = questions
 
+  const posEmoji = {
+    'G': '🥊',
+    'D': '⚔️', 
+    'M': '🧠',
+    'A': '⚽'
+  }
+
   const [userPrefs, setUserPrefs] = useState({
     // Default values
     league: "England",
@@ -60,12 +67,12 @@ function App() {
   }
 
   return (
-    <div >
+    <div className="p-10 items-center justify-center flex flex-row">
       <FormControl>
 
         {/* League */}
-        <div>
-          <p>League</p>
+        <div >
+          <p >League</p>
           <Select
             labelId="league-select-label"
             id="league-selected-id"
@@ -138,7 +145,7 @@ function App() {
 
         {/* Defence prefs */}
         <div>
-          <p>Defence preferences</p>
+          <h1>Defence preferences</h1>
           <Select
             labelId="def-pref-label"
             id="def-prefs-id"
@@ -159,13 +166,14 @@ function App() {
           type="submit"
           onClick={handlePrefSubmit}
         >
-          Submit
+          Build team 🚀
         </Button>
       </FormControl>
 
       {/* Suggested team */}
-      <div>
-        <table>
+      <div className="mx-8">
+        {suggestedTeam.length > 0 && 
+        <table className="table-auto border-solid border-2 rounded">
           <tr>
             <th>Player</th>
             <th>Price</th>
@@ -173,14 +181,15 @@ function App() {
           </tr>
           {suggestedTeam.length > 0 &&
             suggestedTeam.map(player => (
-              <tr key={player.player_name}>
-                <td > {player.player_name} </td>
+              // TODO Add solid borders between according to position 
+              <tr key={player.player_name} className="bg-green-50 border-2">
+                <td > { posEmoji[player.mpg_position] + " | " + player.player_name} </td>
                 <td > {player.price} </td>
-                <td > {player.bid} </td>
+                <td > <strong>{player.bid}</strong> </td>
               </tr>
             ))
           }
-        </table>
+        </table> }
       </div>
     </div>
   )
