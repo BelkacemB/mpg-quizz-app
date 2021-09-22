@@ -10,36 +10,14 @@ const questions = [
         ]
     },
     {
-        questionText: "Critère pour les attaquants:",
-        questionKey: "attCriteria",
+        questionKey: "criteria",
         answerOptions: [
             { displayText: "Goals", answerValue: "goals"}, 
             { displayText: "Assists", answerValue: "assists"}, 
             { displayText: "Defensive performance", answerValue: "def_score"}, 
             { displayText: "Expected goals", answerValue: "xG"}, 
             { displayText: "Expected output (xG+xA)", answerValue: "expected_output"}, 
-        ]
-    }, 
-    {
-        questionText: "Critère pour les milieux:",
-        questionKey: "midCriteria",
-        answerOptions: [
-            { displayText: "Goals", answerValue: "goals"}, 
-            { displayText: "Assists", answerValue: "assists"}, 
-            { displayText: "Defensive performance", answerValue: "def_score"}, 
-            { displayText: "Expected goals", answerValue: "xG"}, 
-            { displayText: "Expected output (xG+xA)", answerValue: "expected_output"}, 
-        ]
-    },
-    {
-        questionText: "Critère pour les défenseurs:",
-        questionKey: "defCriteria",
-        answerOptions: [
-            { displayText: "Goals", answerValue: "goals"}, 
-            { displayText: "Assists", answerValue: "assists"}, 
-            { displayText: "Defensive performance", answerValue: "def_score"}, 
-            { displayText: "Expected goals", answerValue: "xG"}, 
-            { displayText: "Expected output (xG+xA)", answerValue: "expected_output"}, 
+            { displayText: "MPG average rating", answerValue: "average"}, 
         ]
     }
 ]

@@ -18,9 +18,9 @@ function App() {
     // Default values
     league: "England",
     init_budget: 300,
-    att_pref: 'goals',
-    mid_pref: 'assists',
-    def_pref: 'def_score',
+    att_pref: 'average',
+    mid_pref: 'average',
+    def_pref: 'average',
     att_weight: 0.3,
     mid_weight: 0.3,
     def_weight: 0.3,
@@ -115,7 +115,7 @@ function App() {
             onChange={handleChange}
             name="att_pref"
           >
-            {qs.filter(q => q.questionKey === 'attCriteria')[0].answerOptions.map(answer => (
+            {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
               <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
             )
             )}
@@ -134,7 +134,7 @@ function App() {
             value={userPrefs.mid_pref}
             onChange={handleChange}
           >
-            {qs.filter(q => q.questionKey === 'midCriteria')[0].answerOptions.map(answer => (
+            {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
               <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
             )
             )}
@@ -153,7 +153,7 @@ function App() {
             value={userPrefs.def_pref}
             onChange={handleChange}
           >
-            {qs.filter(q => q.questionKey === 'defCriteria')[0].answerOptions.map(answer => (
+            {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
               <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
             )
             )}
@@ -178,14 +178,16 @@ function App() {
             <th>Player</th>
             <th>Price</th>
             <th>Bid</th>
+            <th>MPG average rating</th>
           </tr>
           {suggestedTeam.length > 0 &&
             suggestedTeam.map(player => (
               // TODO Add solid borders between according to position 
               <tr key={player.player_name} className="bg-green-50 border-2">
-                <td > { posEmoji[player.mpg_position] + " | " + player.player_name} </td>
-                <td > {player.price} </td>
-                <td > <strong>{player.bid}</strong> </td>
+                <td> { posEmoji[player.mpg_position] + " | " + player.player_name} </td>
+                <td className="text-center"> {player.price} </td>
+                <td className="text-center"> <strong>{player.bid}</strong> </td>
+                <td className="text-center"> {player.average} </td>
               </tr>
             ))
           }
