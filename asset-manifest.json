@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/mpg-quizz-app/static/css/main.05ed2559.chunk.css",
-    "main.js": "/mpg-quizz-app/static/js/main.633e6789.chunk.js",
-    "main.js.map": "/mpg-quizz-app/static/js/main.633e6789.chunk.js.map",
-    "runtime-main.js": "/mpg-quizz-app/static/js/runtime-main.30e7fad9.js",
-    "runtime-main.js.map": "/mpg-quizz-app/static/js/runtime-main.30e7fad9.js.map",
-    "static/js/2.8dcec9d6.chunk.js": "/mpg-quizz-app/static/js/2.8dcec9d6.chunk.js",
-    "static/js/2.8dcec9d6.chunk.js.map": "/mpg-quizz-app/static/js/2.8dcec9d6.chunk.js.map",
-    "static/js/3.a5f50472.chunk.js": "/mpg-quizz-app/static/js/3.a5f50472.chunk.js",
-    "static/js/3.a5f50472.chunk.js.map": "/mpg-quizz-app/static/js/3.a5f50472.chunk.js.map",
+    "main.css": "/mpg-quizz-app/static/css/main.10dcd3b2.chunk.css",
+    "main.js": "/mpg-quizz-app/static/js/main.a6331679.chunk.js",
+    "main.js.map": "/mpg-quizz-app/static/js/main.a6331679.chunk.js.map",
+    "runtime-main.js": "/mpg-quizz-app/static/js/runtime-main.ba7f3799.js",
+    "runtime-main.js.map": "/mpg-quizz-app/static/js/runtime-main.ba7f3799.js.map",
+    "static/js/2.b89ab095.chunk.js": "/mpg-quizz-app/static/js/2.b89ab095.chunk.js",
+    "static/js/2.b89ab095.chunk.js.map": "/mpg-quizz-app/static/js/2.b89ab095.chunk.js.map",
+    "static/js/3.7eafae80.chunk.js": "/mpg-quizz-app/static/js/3.7eafae80.chunk.js",
+    "static/js/3.7eafae80.chunk.js.map": "/mpg-quizz-app/static/js/3.7eafae80.chunk.js.map",
     "index.html": "/mpg-quizz-app/index.html",
-    "static/css/main.05ed2559.chunk.css.map": "/mpg-quizz-app/static/css/main.05ed2559.chunk.css.map",
-    "static/js/2.8dcec9d6.chunk.js.LICENSE.txt": "/mpg-quizz-app/static/js/2.8dcec9d6.chunk.js.LICENSE.txt"
+    "static/css/main.10dcd3b2.chunk.css.map": "/mpg-quizz-app/static/css/main.10dcd3b2.chunk.css.map",
+    "static/js/2.b89ab095.chunk.js.LICENSE.txt": "/mpg-quizz-app/static/js/2.b89ab095.chunk.js.LICENSE.txt",
+    "static/media/f-icon.168ebcbc.png": "/mpg-quizz-app/static/media/f-icon.168ebcbc.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.30e7fad9.js",
-    "static/js/2.8dcec9d6.chunk.js",
-    "static/css/main.05ed2559.chunk.css",
-    "static/js/main.633e6789.chunk.js"
+    "static/js/runtime-main.ba7f3799.js",
+    "static/js/2.b89ab095.chunk.js",
+    "static/css/main.10dcd3b2.chunk.css",
+    "static/js/main.a6331679.chunk.js"
   ]
 }
