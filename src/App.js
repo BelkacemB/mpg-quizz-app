@@ -2,6 +2,8 @@ import './App.css';
 import questions from './Questions';
 import React, { useState } from 'react';
 import { FormControl, Button, Select, MenuItem, Slider } from '@material-ui/core';
+import Footer from './Footer';
+import { Header } from './Header';
 
 function App() {
 
@@ -9,7 +11,7 @@ function App() {
 
   const posEmoji = {
     'G': '🥊',
-    'D': '⚔️', 
+    'D': '⚔️',
     'M': '🧠',
     'A': '⚽'
   }
@@ -67,131 +69,137 @@ function App() {
   }
 
   return (
-    <div className="p-10 items-center justify-center flex flex-row">
-      <FormControl>
+    <div>
+      <Header />
+      <div className="p-10 items-center justify-center flex flex-row">
+        <FormControl>
 
-        {/* League */}
-        <div >
-          <p >League</p>
-          <Select
-            labelId="league-select-label"
-            id="league-selected-id"
-            value={userPrefs.league}
-            onChange={handleChange}
-            name="league"
+          {/* League */}
+          <div >
+            <p >League</p>
+            <Select
+              labelId="league-select-label"
+              id="league-selected-id"
+              value={userPrefs.league}
+              onChange={handleChange}
+              name="league"
+            >
+              {qs.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
+                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+              )
+              )}
+            </Select>
+          </div>
+          <br />
+
+          {/* Budget */}
+          <div>
+            <p>Initial budget</p>
+
+            <Slider
+              defaultValue={300}
+              aria-labelledby="budget-slider"
+              valueLabelDisplay="auto"
+              step={10}
+              marks
+              min={100}
+              max={500}
+              onChangeCommitted={handleSlideChange}
+              name="init_budget"
+            />
+          </div>
+
+          {/* Attack prefs */}
+          <div>
+            <p>Attack preferences</p>
+            <Select
+              labelId="att-pref-label"
+              id="att-prefs-id"
+              value={userPrefs.att_pref}
+              onChange={handleChange}
+              name="att_pref"
+            >
+              {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+              )
+              )}
+            </Select>
+          </div>
+          <br />
+
+
+          {/* Midfield prefs */}
+          <div>
+            <p>Midfield preferences</p>
+            <Select
+              labelId="mid-pref-label"
+              id="mid-prefs-id"
+              name="mid_pref"
+              value={userPrefs.mid_pref}
+              onChange={handleChange}
+            >
+              {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+              )
+              )}
+            </Select>
+          </div>
+          <br />
+
+
+          {/* Defence prefs */}
+          <div>
+            <h1>Defence preferences</h1>
+            <Select
+              labelId="def-pref-label"
+              id="def-prefs-id"
+              name="def_pref"
+              value={userPrefs.def_pref}
+              onChange={handleChange}
+            >
+              {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+              )
+              )}
+            </Select>
+          </div>
+          <br />
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={handlePrefSubmit}
           >
-            {qs.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
-              <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-            )
-            )}
-          </Select>
-        </div>
-        <br />
+            Build team 🚀
+          </Button>
+        </FormControl>
 
-        {/* Budget */}
-        <div>
-          <p>Initial budget</p>
-
-          <Slider
-            defaultValue={300}
-            aria-labelledby="budget-slider"
-            valueLabelDisplay="auto"
-            step={10}
-            marks
-            min={100}
-            max={500}
-            onChangeCommitted={handleSlideChange}
-            name="init_budget"
-          />
-        </div>
-
-        {/* Attack prefs */}
-        <div>
-          <p>Attack preferences</p>
-          <Select
-            labelId="att-pref-label"
-            id="att-prefs-id"
-            value={userPrefs.att_pref}
-            onChange={handleChange}
-            name="att_pref"
-          >
-            {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-              <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-            )
-            )}
-          </Select>
-        </div>
-        <br />
-
-
-        {/* Midfield prefs */}
-        <div>
-          <p>Midfield preferences</p>
-          <Select
-            labelId="mid-pref-label"
-            id="mid-prefs-id"
-            name="mid_pref"
-            value={userPrefs.mid_pref}
-            onChange={handleChange}
-          >
-            {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-              <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-            )
-            )}
-          </Select>
-        </div>
-        <br />
-
-
-        {/* Defence prefs */}
-        <div>
-          <h1>Defence preferences</h1>
-          <Select
-            labelId="def-pref-label"
-            id="def-prefs-id"
-            name="def_pref"
-            value={userPrefs.def_pref}
-            onChange={handleChange}
-          >
-            {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-              <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-            )
-            )}
-          </Select>
-        </div>
-        <br />
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          onClick={handlePrefSubmit}
-        >
-          Build team 🚀
-        </Button>
-      </FormControl>
-
-      {/* Suggested team */}
-      <div className="mx-8">
-        {suggestedTeam.length > 0 && 
-        <table className="table-auto border-solid border-2 rounded">
-          <tr>
-            <th>Player</th>
-            <th>Price</th>
-            <th>Bid</th>
-            <th>MPG average rating</th>
-          </tr>
+        {/* Suggested team */}
+        <div className="mx-8">
           {suggestedTeam.length > 0 &&
-            suggestedTeam.map(player => (
-              // TODO Add solid borders between according to position 
-              <tr key={player.player_name} className="bg-green-50 border-2">
-                <td> { posEmoji[player.mpg_position] + " | " + player.player_name} </td>
-                <td className="text-center"> {player.price} </td>
-                <td className="text-center"> <strong>{player.bid}</strong> </td>
-                <td className="text-center"> {player.average} </td>
+            <table className="table-auto border-solid border-2 rounded">
+              <tr>
+                <th>Player</th>
+                <th>Price</th>
+                <th>Bid</th>
+                <th>MPG average rating</th>
               </tr>
-            ))
-          }
-        </table> }
+              {suggestedTeam.length > 0 &&
+                suggestedTeam.map(player => (
+                  // TODO Add solid borders between according to position 
+                  <tr key={player.player_name} className="bg-green-50 border-2">
+                    <td> {posEmoji[player.mpg_position] + " | " + player.player_name} </td>
+                    <td className="text-center"> {player.price} </td>
+                    <td className="text-center"> <strong>{player.bid}</strong> </td>
+                    <td className="text-center"> {player.average} </td>
+                  </tr>
+                ))
+              }
+            </table>}
+        </div>
+      </div>
+      <div>
+        <Footer />
       </div>
     </div>
   )
