@@ -4,17 +4,12 @@ import React, { useState } from 'react';
 import { FormControl, Button, Select, MenuItem, Slider } from '@material-ui/core';
 import Footer from './Footer';
 import { Header } from './Header';
+import { trackPromise } from 'react-promise-tracker'
+import { LoadingIndicator } from './LoadingIndicator';
 
 function App() {
 
   const qs = questions
-
-  const posEmoji = {
-    'G': '🥊',
-    'D': '⚔️',
-    'M': '🧠',
-    'A': '⚽'
-  }
 
   const [userPrefs, setUserPrefs] = useState({
     // Default values
@@ -58,25 +53,27 @@ function App() {
       redirect: 'follow'
     };
 
-    fetch("https://nrkf97hvad.execute-api.us-east-2.amazonaws.com/preproduction/opt", requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        setSuggestedTeam(data);
-        console.log(data)
-      }
-      )
-      .catch(error => console.log('error', error));
+    trackPromise(
+      fetch("https://nrkf97hvad.execute-api.us-east-2.amazonaws.com/preproduction/opt", requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          setSuggestedTeam(data);
+          console.log(data)
+        }
+        )
+        .catch(error => console.log('error', error))
+    );
   }
 
   return (
     <div>
       <Header />
-      <div className="p-10 items-center justify-center flex flex-row">
+      <div className="p-10 justify-center md:flex">
         <FormControl>
 
           {/* League */}
-          <div >
-            <p >League</p>
+          <div className="items-center p-4">
+            <h2><strong>League</strong></h2>
             <Select
               labelId="league-select-label"
               id="league-selected-id"
@@ -94,7 +91,7 @@ function App() {
 
           {/* Budget */}
           <div>
-            <p>Initial budget</p>
+            <h2><strong>Inital budget</strong></h2>
 
             <Slider
               defaultValue={300}
@@ -111,7 +108,7 @@ function App() {
 
           {/* Attack prefs */}
           <div>
-            <p>Attack preferences</p>
+            <h2><strong>Attack preferences</strong></h2>
             <Select
               labelId="att-pref-label"
               id="att-prefs-id"
@@ -130,7 +127,7 @@ function App() {
 
           {/* Midfield prefs */}
           <div>
-            <p>Midfield preferences</p>
+            <h2><strong>Midfield preferences</strong></h2>
             <Select
               labelId="mid-pref-label"
               id="mid-prefs-id"
@@ -149,7 +146,7 @@ function App() {
 
           {/* Defence prefs */}
           <div>
-            <h1>Defence preferences</h1>
+            <h2><strong>Defence preferences</strong></h2>
             <Select
               labelId="def-pref-label"
               id="def-prefs-id"
@@ -176,26 +173,40 @@ function App() {
 
         {/* Suggested team */}
         <div className="mx-8">
-          {suggestedTeam.length > 0 &&
-            <table className="table-auto border-solid border-2 rounded">
+          <table className="table-auto mt-6">
+            <thead>
               <tr>
-                <th>Player</th>
+                <th>Position</th>
+                <th className="mx-6">Player</th>
                 <th>Price</th>
                 <th>Bid</th>
                 <th>MPG average rating</th>
               </tr>
+            </thead>
+            <tbody>
+              <LoadingIndicator className="justify-center" />
               {suggestedTeam.length > 0 &&
                 suggestedTeam.map(player => (
                   // TODO Add solid borders between according to position 
-                  <tr key={player.player_name} className="border-2">
-                    <td> {posEmoji[player.mpg_position] + " | " + player.player_name} </td>
+                  <tr key={player.player_name}>
+                    <td> {player.mpg_position} </td>
+                    <td> <strong>{player.player_name}</strong> </td>
                     <td className="text-center"> {player.price} </td>
-                    <td className="text-center"> <strong>{player.bid}</strong> </td>
+                    <td className="text-center" style={{ 'background-color': 'hsl(120,100%,75%)' }}> <strong>{player.bid}</strong> </td>
                     <td className="text-center"> {player.average} </td>
                   </tr>
-                ))
+                )
+                )
               }
-            </table>}
+              <tr className="total-row">
+                <td className="text-center"> Σ </td>
+                <td className="text-center"><strong>Total</strong></td>
+                <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce( ((a, b) => a + b.price) , 0) : 0}</td>
+                <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce( ((a, b) => a + b.bid) , 0) : 0}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <div>
