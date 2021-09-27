@@ -68,7 +68,7 @@ function App() {
   return (
     <div>
       <Header />
-      <div className="p-10 justify-center md:flex">
+      <div className="p-4 justify-center md:flex">
         <FormControl>
 
           {/* League */}
