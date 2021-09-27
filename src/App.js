@@ -201,9 +201,10 @@ function App() {
               <tr className="total-row">
                 <td className="text-center"> Σ </td>
                 <td className="text-center"><strong>Total</strong></td>
-                <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce( ((a, b) => a + b.price) , 0) : 0}</td>
-                <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce( ((a, b) => a + b.bid) , 0) : 0}</td>
-                <td></td>
+                <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce(((a, b) => a + b.price), 0) : 0}</td>
+                <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce(((a, b) => a + b.bid), 0) : 0}</td>
+                <td className="text-center">Team rating = {suggestedTeam.length > 0 ? (suggestedTeam.reduce(((a, b) => a + b.average), 0) / suggestedTeam.length).toFixed(2) : 0}</td>
+
               </tr>
             </tbody>
           </table>
