@@ -187,7 +187,7 @@ function App() {
               {suggestedTeam.length > 0 &&
                 suggestedTeam.map(player => (
                   // TODO Add solid borders between according to position 
-                  <tr key={player.player_name} className="bg-green-50 border-2">
+                  <tr key={player.player_name} className="border-2">
                     <td> {posEmoji[player.mpg_position] + " | " + player.player_name} </td>
                     <td className="text-center"> {player.price} </td>
                     <td className="text-center"> <strong>{player.bid}</strong> </td>
