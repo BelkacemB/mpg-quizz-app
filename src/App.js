@@ -7,6 +7,7 @@ import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
 import { LoadingIndicator } from './LoadingIndicator';
 import ReactTooltip from 'react-tooltip';
+import {getPitchGreenWeightedColor} from './styles/styles'
 
 function App() {
 
@@ -193,14 +194,14 @@ function App() {
                   // TODO Add solid borders between according to position 
                   <tr key={player.player_name}>
                     <td> {player.mpg_position} </td>
-                    <td >                     
+                    <td >
                       <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
                         <span>{`Team: ${player.Team}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}`}</span>
                       </ReactTooltip>
                       <strong data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</strong>
                     </td>
                     <td className="text-center"> {player.price} </td>
-                    <td className="text-center" style={{ 'background-color': 'hsl(120,100%,75%)' }}> <strong>{player.bid}</strong> </td>
+                    <td className="text-center" style={getPitchGreenWeightedColor(Math.min(1, player.bid/(player.price*3)))}> <strong>{player.bid}</strong> </td>
                     <td className="text-center"> {player.average} </td>
                   </tr>
                 )
@@ -218,6 +219,7 @@ function App() {
           </table>
         </div>
       </div>
+
       <div>
         <Footer />
       </div>
