@@ -72,7 +72,7 @@ function App() {
         <FormControl>
 
           {/* League */}
-          <div className="items-center p-4">
+          <div>
             <h2><strong>League</strong></h2>
             <Select
               labelId="league-select-label"
@@ -91,7 +91,7 @@ function App() {
 
           {/* Budget */}
           <div>
-            <h2><strong>Inital budget</strong></h2>
+            <h2><strong>Initial budget</strong></h2>
 
             <Slider
               defaultValue={300}
@@ -108,7 +108,7 @@ function App() {
 
           {/* Attack prefs */}
           <div>
-            <h2><strong>Attack preferences</strong></h2>
+            <h2><strong>Attack  - top criteria</strong></h2>
             <Select
               labelId="att-pref-label"
               id="att-prefs-id"
@@ -127,7 +127,7 @@ function App() {
 
           {/* Midfield prefs */}
           <div>
-            <h2><strong>Midfield preferences</strong></h2>
+            <h2><strong>Midfield  - top criteria</strong></h2>
             <Select
               labelId="mid-pref-label"
               id="mid-prefs-id"
@@ -146,7 +146,7 @@ function App() {
 
           {/* Defence prefs */}
           <div>
-            <h2><strong>Defence preferences</strong></h2>
+            <h2><strong>Defence  - top criteria</strong></h2>
             <Select
               labelId="def-pref-label"
               id="def-prefs-id"
@@ -172,8 +172,8 @@ function App() {
         </FormControl>
 
         {/* Suggested team */}
-        <div className="mx-8">
-          <table className="table-auto mt-6">
+        <div>
+          <table className="table-auto m-3">
             <thead>
               <tr>
                 <th>Position</th>
