@@ -6,6 +6,7 @@ import Footer from './Footer';
 import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
 import { LoadingIndicator } from './LoadingIndicator';
+import ReactTooltip from 'react-tooltip';
 
 function App() {
 
@@ -174,8 +175,8 @@ function App() {
 
         {/* Suggested team */}
         <div>
-        <LoadingIndicator />
-                
+          <LoadingIndicator />
+
           <table className="table-auto m-3">
             <thead>
               <tr>
@@ -192,7 +193,12 @@ function App() {
                   // TODO Add solid borders between according to position 
                   <tr key={player.player_name}>
                     <td> {player.mpg_position} </td>
-                    <td> <strong>{player.player_name}</strong> </td>
+                    <td >                     
+                      <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
+                        <span>{`Team: ${player.Team}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}`}</span>
+                      </ReactTooltip>
+                      <strong data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</strong>
+                    </td>
                     <td className="text-center"> {player.price} </td>
                     <td className="text-center" style={{ 'background-color': 'hsl(120,100%,75%)' }}> <strong>{player.bid}</strong> </td>
                     <td className="text-center"> {player.average} </td>
