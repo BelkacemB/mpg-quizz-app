@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularProgress } from '@mui/material';
+import CalculatorAnim from './img/tactic.gif'
 import { usePromiseTracker } from 'react-promise-tracker';
 
 export const LoadingIndicator = () => {
@@ -8,9 +8,16 @@ export const LoadingIndicator = () => {
     return (
         <div>
             {promiseInProgress &&
-                <div>
-                    <CircularProgress />
-                </div>
+            <div>
+            <p className="block italic text-center text-2xl mx-6">Optimizing...</p>
+            <br/>
+                    <img
+                        alt=""
+                        src={CalculatorAnim}
+                        width="250"
+                        className="block m-auto rounded-full"
+                    />
+            </div>
             }
         </div>
     )

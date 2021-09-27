@@ -39,6 +39,7 @@ function App() {
   }
 
   const handlePrefSubmit = () => {
+    setSuggestedTeam([])
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -173,6 +174,8 @@ function App() {
 
         {/* Suggested team */}
         <div>
+        <LoadingIndicator />
+                
           <table className="table-auto m-3">
             <thead>
               <tr>
@@ -184,7 +187,6 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              <LoadingIndicator className="justify-center" />
               {suggestedTeam.length > 0 &&
                 suggestedTeam.map(player => (
                   // TODO Add solid borders between according to position 
