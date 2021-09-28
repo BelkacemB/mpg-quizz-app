@@ -1,13 +1,15 @@
 import './App.css';
 import questions from './Questions';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormControl, Button, Select, MenuItem, Slider } from '@material-ui/core';
 import Footer from './Footer';
 import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
 import { LoadingIndicator } from './LoadingIndicator';
 import ReactTooltip from 'react-tooltip';
-import {getPositionWeightedColor} from './styles/styles'
+import { getPositionWeightedColor } from './styles/styles'
+import { PieChart } from 'react-minimal-pie-chart';
+
 
 function App() {
 
@@ -27,6 +29,7 @@ function App() {
   })
 
   const [suggestedTeam, setSuggestedTeam] = useState([])
+  const [expenseData, setExpenseData] = useState([])
 
   const handleChange = (event) => {
     let updatedValue = {}
@@ -67,6 +70,23 @@ function App() {
         .catch(error => console.log('error', error))
     );
   }
+
+  const getDepartmentTotal = (team, department) => {
+    let depPlayers = team.filter(p => p.mpg_position === department)
+    return depPlayers.reduce((preValue, curValue) => preValue + curValue.bid, 0)
+  };
+
+  useEffect(() => {
+    if (suggestedTeam.length > 0) {
+      setExpenseData([
+        { title: 'Attack', value: getDepartmentTotal(suggestedTeam, 'A'), color: getPositionWeightedColor(0.6, 'A')['background-color'] },
+        { title: 'Midfield', value: getDepartmentTotal(suggestedTeam, 'M'), color: getPositionWeightedColor(0.6, 'M')['background-color'] },
+        { title: 'Defence', value: getDepartmentTotal(suggestedTeam, 'D'), color: getPositionWeightedColor(0.6, 'D')['background-color'] },
+        { title: 'Goalkeepers', value: getDepartmentTotal(suggestedTeam, 'G'), color: getPositionWeightedColor(0.6, 'G')['background-color'] }
+      ])
+    }
+  }, [suggestedTeam])
+
 
   return (
     <div>
@@ -201,7 +221,7 @@ function App() {
                       <strong data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</strong>
                     </td>
                     <td className="text-center"> {player.price} </td>
-                    <td className="text-center" style={getPositionWeightedColor(Math.min(1, player.bid/(player.price*3)), player.mpg_position)}> <strong>{player.bid}</strong> </td>
+                    <td className="text-center" style={getPositionWeightedColor(Math.min(1, player.bid / (player.price * 3)), player.mpg_position)}> <strong>{player.bid}</strong> </td>
                     <td className="text-center"> {player.average} </td>
                   </tr>
                 )
@@ -218,8 +238,15 @@ function App() {
             </tbody>
           </table>
         </div>
+        <div>
+          <h2>Team analytics</h2>
+          {expenseData.length > 0 &&
+            <PieChart data={expenseData} style={{ height: '200px' }} />}
+        </div>
       </div>
+      <div>
 
+      </div>
       <div>
         <Footer />
       </div>
