@@ -17,9 +17,9 @@ function App() {
     // Default values
     league: "England",
     init_budget: 300,
-    att_pref: 'average',
-    mid_pref: 'average',
-    def_pref: 'average',
+    att_pref: 'goals',
+    mid_pref: 'assists',
+    def_pref: 'def_score',
     att_weight: 0.3,
     mid_weight: 0.3,
     def_weight: 0.3,
