@@ -7,7 +7,7 @@ import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
 import { LoadingIndicator } from './LoadingIndicator';
 import ReactTooltip from 'react-tooltip';
-import { getPitchGreenWeightedColor } from './styles/styles'
+import {getPositionWeightedColor} from './styles/styles'
 
 function App() {
 
@@ -101,7 +101,7 @@ function App() {
   return (
     <div>
       <Header />
-      <div className="p-4 justify-center md:flex">
+      <div className="p-4 justify-center text-center md:flex">
         <FormControl>
 
           {/* League */}
@@ -240,12 +240,12 @@ function App() {
                     <td> {player.mpg_position} </td>
                     <td >
                       <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
-                        <span>{`Team: ${player.Team}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}`}</span>
+                        <span>{`Team: <b>${player.Team}</b>, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}`}</span>
                       </ReactTooltip>
                       <strong data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</strong>
                     </td>
                     <td className="text-center"> {player.price} </td>
-                    <td className="text-center" style={getPitchGreenWeightedColor(Math.min(1, player.bid / (player.price * 3)))}> <strong>{player.bid}</strong> </td>
+                    <td className="text-center" style={getPositionWeightedColor(Math.min(1, player.bid/(player.price*3)), player.mpg_position)}> <strong>{player.bid}</strong> </td>
                     <td className="text-center"> {player.average} </td>
                   </tr>
                 )
