@@ -9,3 +9,8 @@ export const positionColorMap = {
     'D' : '100',
     'G' : '215'
 }
+
+export const defaultLabelStyle = {
+    fontSize: '8px',
+    fontFamily: 'sans-serif',
+  };

@@ -7,7 +7,7 @@ import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
 import { LoadingIndicator } from './LoadingIndicator';
 import ReactTooltip from 'react-tooltip';
-import { getPositionWeightedColor } from './styles/styles'
+import { getPositionWeightedColor, defaultLabelStyle } from './styles/styles'
 import { PieChart } from 'react-minimal-pie-chart';
 
 
@@ -75,6 +75,7 @@ function App() {
 
   const handlePrefSubmit = () => {
     setSuggestedTeam([])
+    setExpenseData([])
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -109,10 +110,10 @@ function App() {
   useEffect(() => {
     if (suggestedTeam.length > 0) {
       setExpenseData([
-        { title: 'Attack', value: getDepartmentTotal(suggestedTeam, 'A'), color: getPositionWeightedColor(0.6, 'A')['background-color'] },
-        { title: 'Midfield', value: getDepartmentTotal(suggestedTeam, 'M'), color: getPositionWeightedColor(0.6, 'M')['background-color'] },
-        { title: 'Defence', value: getDepartmentTotal(suggestedTeam, 'D'), color: getPositionWeightedColor(0.6, 'D')['background-color'] },
-        { title: 'Goalkeepers', value: getDepartmentTotal(suggestedTeam, 'G'), color: getPositionWeightedColor(0.6, 'G')['background-color'] }
+        { title: 'Attack', value: getDepartmentTotal(suggestedTeam, 'A'), color: getPositionWeightedColor(0.8, 'A')['background-color'] },
+        { title: 'Midfield', value: getDepartmentTotal(suggestedTeam, 'M'), color: getPositionWeightedColor(0.8, 'M')['background-color'] },
+        { title: 'Defence', value: getDepartmentTotal(suggestedTeam, 'D'), color: getPositionWeightedColor(0.8, 'D')['background-color'] },
+        { title: 'Goalkeepers', value: getDepartmentTotal(suggestedTeam, 'G'), color: getPositionWeightedColor(0.8, 'G')['background-color'] }
       ])
     }
   }, [suggestedTeam])
@@ -240,6 +241,7 @@ function App() {
 
         {/* Suggested team */}
         <div>
+          <h2><strong>Suggested team</strong></h2>
           <LoadingIndicator />
 
           <table className="table-auto m-3">
@@ -282,10 +284,18 @@ function App() {
             </tbody>
           </table>
         </div>
-        <div>
-          <h2>Team analytics</h2>
+        <div >
+          <h2><strong>Total bids per department</strong></h2>
+          <br/>
           {expenseData.length > 0 &&
-            <PieChart data={expenseData} style={{ height: '200px' }} />}
+            <PieChart 
+            data={expenseData} 
+            style={{ height: '300px' }} 
+            label={({ dataEntry }) => `${(dataEntry.value*100)/500}%`}
+            labelStyle= {{...defaultLabelStyle}}
+            segmentsStyle={{ transition: 'stroke .3s' }}
+
+            />}
         </div>
       </div>
       <div>
