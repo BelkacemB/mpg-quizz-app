@@ -289,8 +289,12 @@ function App() {
           <br/>
           {expenseData.length > 0 &&
             <PieChart 
+            lineWidth={60}
+            animate
+            segmentsShift={1}
+            labelPosition={65}
             data={expenseData} 
-            style={{ height: '300px' }} 
+            style={{ height: '280px' }} 
             label={({ dataEntry }) => `${(dataEntry.value*100)/500}%`}
             labelStyle= {{...defaultLabelStyle}}
             segmentsStyle={{ transition: 'stroke .3s' }}
