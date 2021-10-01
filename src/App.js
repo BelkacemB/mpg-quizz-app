@@ -7,7 +7,7 @@ import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
 import { LoadingIndicator } from './LoadingIndicator';
 import ReactTooltip from 'react-tooltip';
-import {getPitchGreenWeightedColor} from './styles/styles'
+import { getPitchGreenWeightedColor } from './styles/styles'
 
 function App() {
 
@@ -38,6 +38,15 @@ function App() {
     let updatedValue = {}
     updatedValue['init_budget'] = event[1]
     setUserPrefs({ ...userPrefs, ...updatedValue })
+  }
+
+  const handleAllocationChange = (...event) => {
+    let updatedWeights = {}
+    updatedWeights['gk_weight'] = event[1][0] / 100
+    updatedWeights['def_weight'] = (event[1][1] - event[1][0]) / 100
+    updatedWeights['mid_weight'] = (event[1][2] - event[1][1]) / 100
+    updatedWeights['att_weight'] = (100 -  event[1][2]) / 100 
+    setUserPrefs({...userPrefs, ...updatedWeights})
   }
 
   const handlePrefSubmit = () => {
@@ -125,6 +134,7 @@ function App() {
               )}
             </Select>
           </div>
+
           <br />
 
 
@@ -164,6 +174,19 @@ function App() {
             </Select>
           </div>
           <br />
+          <div>
+            <h2><strong>Budget allocation per department</strong></h2>
+            <p className="italic text-center">GK / Def / Mid / Att</p>
+            <Slider
+              valueLabelDisplay="auto"
+              min={0}
+              max={100}
+              aria-labelledby="track-inverted-range-slider"
+              defaultValue={[10, 40, 70]}
+              onChangeCommitted={handleAllocationChange}
+            />
+          </div>
+          <br />
           <Button
             variant="contained"
             color="primary"
@@ -201,7 +224,7 @@ function App() {
                       <strong data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</strong>
                     </td>
                     <td className="text-center"> {player.price} </td>
-                    <td className="text-center" style={getPitchGreenWeightedColor(Math.min(1, player.bid/(player.price*3)))}> <strong>{player.bid}</strong> </td>
+                    <td className="text-center" style={getPitchGreenWeightedColor(Math.min(1, player.bid / (player.price * 3)))}> <strong>{player.bid}</strong> </td>
                     <td className="text-center"> {player.average} </td>
                   </tr>
                 )
