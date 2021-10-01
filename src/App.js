@@ -28,15 +28,36 @@ function App() {
 
   const [suggestedTeam, setSuggestedTeam] = useState([])
 
+  const biddingMarks = [
+    {
+      value: 1,
+      label: 'x1'
+    },
+    {
+      value: 2,
+      label: 'x2'
+    },
+    {
+      value: 3,
+      label: 'x3'
+    },
+  ]
+
   const handleChange = (event) => {
     let updatedValue = {}
     updatedValue[event.target.name] = event.target.value
     setUserPrefs({ ...userPrefs, ...updatedValue })
   }
 
-  const handleSlideChange = (...event) => {
+  const initBudgetMapper = {
+    1: 400,
+    2: 300,
+    3: 200
+  }
+
+  const handleBidSlide = (...event) => {
     let updatedValue = {}
-    updatedValue['init_budget'] = event[1]
+    updatedValue['init_budget'] = initBudgetMapper[event[1]]
     setUserPrefs({ ...userPrefs, ...updatedValue })
   }
 
@@ -45,8 +66,8 @@ function App() {
     updatedWeights['gk_weight'] = event[1][0] / 100
     updatedWeights['def_weight'] = (event[1][1] - event[1][0]) / 100
     updatedWeights['mid_weight'] = (event[1][2] - event[1][1]) / 100
-    updatedWeights['att_weight'] = (100 -  event[1][2]) / 100 
-    setUserPrefs({...userPrefs, ...updatedWeights})
+    updatedWeights['att_weight'] = (100 - event[1][2]) / 100
+    setUserPrefs({ ...userPrefs, ...updatedWeights })
   }
 
   const handlePrefSubmit = () => {
@@ -103,17 +124,17 @@ function App() {
 
           {/* Budget */}
           <div>
-            <h2><strong>Initial budget</strong></h2>
+            <h2><strong>Bidding power</strong></h2>
 
             <Slider
               defaultValue={300}
               aria-labelledby="budget-slider"
               valueLabelDisplay="auto"
-              step={10}
-              marks
-              min={100}
-              max={500}
-              onChangeCommitted={handleSlideChange}
+              step={1}
+              marks={biddingMarks}
+              min={1}
+              max={3}
+              onChangeCommitted={handleBidSlide}
               name="init_budget"
             />
           </div>
