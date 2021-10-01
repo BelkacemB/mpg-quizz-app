@@ -216,7 +216,7 @@ function App() {
                     <td> {player.mpg_position} </td>
                     <td >
                       <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
-                        <span>{`Team: <b>${player.Team}</b>, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}`}</span>
+                        <span>{`Team: ${player.Team}, games: ${player.games}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}`}</span>
                       </ReactTooltip>
                       <strong data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</strong>
                     </td>
