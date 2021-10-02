@@ -5,16 +5,3 @@
     float: right;
     padding-right: 1em;
   }
-
-  th {
-    padding: 0.5em;
-  }
-  td {
-    border: 1px solid black;
-  }
-
-  table {
-    border:solid black 1px;
-    border-radius:6px;
-    -moz-border-radius:6px;
-}
