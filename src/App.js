@@ -7,9 +7,8 @@ import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
 import { LoadingIndicator } from './LoadingIndicator';
 import ReactTooltip from 'react-tooltip';
-import { getPositionWeightedColor, defaultLabelStyle } from './styles/styles'
-import { PieChart } from 'react-minimal-pie-chart';
-import { Radar } from 'react-chartjs-2';
+import { getPositionWeightedBackgroundColor, getPositionWeightedColor } from './styles/styles'
+import { Pie, Radar } from 'react-chartjs-2';
 
 function App() {
 
@@ -29,7 +28,7 @@ function App() {
   })
 
   const [suggestedTeam, setSuggestedTeam] = useState([])
-  const [expenseData, setExpenseData] = useState([])
+  const [expenseData, setExpenseData] = useState({})
   const [teamAnalytics, setTeamAnalytics] = useState({})
 
   const biddingMarks = [
@@ -76,13 +75,13 @@ function App() {
 
   const handleTryAgain = () => {
     setSuggestedTeam([])
-    setExpenseData([])
-    setTeamAnalytics([])
+    setExpenseData({})
+    setTeamAnalytics({})
   }
   const handlePrefSubmit = () => {
     setSuggestedTeam([])
-    setExpenseData([])
-    setTeamAnalytics([])
+    setExpenseData({})
+    setTeamAnalytics({})
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -127,12 +126,31 @@ function App() {
 
   useEffect(() => {
     if (suggestedTeam.length > 0) {
-      setExpenseData([
-        { title: 'Attack', value: getDepartmentTotal(suggestedTeam, 'A'), color: getPositionWeightedColor(0.8, 'A')['background-color'] },
-        { title: 'Midfield', value: getDepartmentTotal(suggestedTeam, 'M'), color: getPositionWeightedColor(0.8, 'M')['background-color'] },
-        { title: 'Defence', value: getDepartmentTotal(suggestedTeam, 'D'), color: getPositionWeightedColor(0.8, 'D')['background-color'] },
-        { title: 'Goalkeepers', value: getDepartmentTotal(suggestedTeam, 'G'), color: getPositionWeightedColor(0.8, 'G')['background-color'] }
-      ])
+      setExpenseData({
+        labels: ['Attack', 'Midfield', 'Defence', 'Goalkeeping'],
+        datasets: [{
+          label: "% of bids",
+          data: [
+            (getDepartmentTotal(suggestedTeam, 'A') * 100) / 500,
+            (getDepartmentTotal(suggestedTeam, 'M') * 100) / 500,
+            (getDepartmentTotal(suggestedTeam, 'D') * 100) / 500,
+            (getDepartmentTotal(suggestedTeam, 'G') * 100) / 500]
+          ,
+          backgroundColor: [
+            getPositionWeightedColor(0.4, 'A'),
+            getPositionWeightedColor(0.4, 'M'),
+            getPositionWeightedColor(0.4, 'D'),
+            getPositionWeightedColor(0.4, 'G')
+          ],
+          borderColor: [
+            getPositionWeightedColor(1, 'A'),
+            getPositionWeightedColor(1, 'M'),
+            getPositionWeightedColor(1, 'D'),
+            getPositionWeightedColor(1, 'G')
+          ],
+          borderWidth: 1
+        }]
+      })
       setTeamAnalytics({
         labels: ['Attack', 'Midfield', 'Defence'],
         datasets: [
@@ -284,13 +302,10 @@ function App() {
           </FormControl>}
 
 
-        
+
         {suggestedTeam.length > 0 && (
-          <div id="results" className="p-4 justify-center text-center md:flex">
+          <div id="results" className="p-4 md:flex">
             <div>
-              <h2><strong>Suggested team</strong></h2>
-
-
               <table className="table-auto mx-6 rounded-lg">
                 <thead>
                   <tr>
@@ -311,7 +326,7 @@ function App() {
                           <span data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</span>
                         </td>
                         <td className="text-center"> {player.price} </td>
-                        <td className="text-center" style={getPositionWeightedColor(Math.min(1, player.bid / (player.price * 3)), player.mpg_position)}> <strong>{player.bid}</strong> </td>
+                        <td className="text-center" style={getPositionWeightedBackgroundColor(Math.min(1, player.bid / (player.price * 3)), player.mpg_position)}> <strong>{player.bid}</strong> </td>
                       </tr>
                     )
                     )
@@ -326,19 +341,13 @@ function App() {
               <br />
               <span>Team MPG rating: <b>{suggestedTeam.length > 0 ? (suggestedTeam.reduce(((a, b) => a + b.average), 0) / suggestedTeam.length).toFixed(2) : 0}</b> / 10 </span>
             </div>
-            <div >
-              <h2><strong>Total bids per department</strong></h2>
+            <div>
+              <h2><strong>Analytics</strong></h2>
               <br />
-              {expenseData.length > 0 &&
+              {expenseData &&
                 <div>
-                  <PieChart
+                  <Pie
                     data={expenseData}
-                    style={{ height: '250px' }}
-                    label={({ dataEntry }) => `${(dataEntry.value * 100) / 500}%`}
-                    labelStyle={{ ...defaultLabelStyle }}
-                    segmentsStyle={{ transition: 'stroke .3s' }}
-                    segmentsShift={1}
-                    className="mx-6"
                   />
                   <br />
 
@@ -346,7 +355,7 @@ function App() {
                     <Radar data={teamAnalytics} options={radarChartOptions} />)}
 
                 </div>}
-                <div><Button
+              <div><Button
                 variant="contained"
                 color="primary"
                 type="submit"
