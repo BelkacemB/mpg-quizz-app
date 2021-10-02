@@ -239,65 +239,64 @@ function App() {
           </Button>
         </FormControl>
 
-        {/* Suggested team */}
-        <div>
-          <h2><strong>Suggested team</strong></h2>
-          <LoadingIndicator />
+        <LoadingIndicator className="mx-8"/>
+        {suggestedTeam.length > 0 && (          
+        <div id="results" className="flex">
+          <div>
+            <h2><strong>Suggested team</strong></h2>
 
-          <table className="table-auto m-3">
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th className="mx-6">Player</th>
-                <th>Price</th>
-                <th>Bid</th>
-                <th>MPG average rating</th>
-              </tr>
-            </thead>
-            <tbody>
-              {suggestedTeam.length > 0 &&
-                suggestedTeam.map(player => (
-                  // TODO Add solid borders between according to position 
-                  <tr key={player.player_name}>
-                    <td> {player.mpg_position} </td>
-                    <td >
-                      <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
-                        <span>{`Team: ${player.Team}, games: ${player.games}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}`}</span>
-                      </ReactTooltip>
-                      <strong data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</strong>
-                    </td>
-                    <td className="text-center"> {player.price} </td>
-                    <td className="text-center" style={getPositionWeightedColor(Math.min(1, player.bid / (player.price * 3)), player.mpg_position)}> <strong>{player.bid}</strong> </td>
-                    <td className="text-center"> {player.average} </td>
-                  </tr>
-                )
-                )
-              }
-              <tr className="total-row">
-                <td className="text-center"> Σ </td>
-                <td className="text-center"><strong>Total</strong></td>
-                <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce(((a, b) => a + b.price), 0) : 0}</td>
-                <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce(((a, b) => a + b.bid), 0) : 0}</td>
-                <td className="text-center">Team rating = {suggestedTeam.length > 0 ? (suggestedTeam.reduce(((a, b) => a + b.average), 0) / suggestedTeam.length).toFixed(2) : 0}</td>
 
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div >
-          <h2><strong>Total bids per department</strong></h2>
-          <br/>
-          {expenseData.length > 0 &&
-            <PieChart 
-            data={expenseData} 
-            style={{ height: '300px' }} 
-            label={({ dataEntry }) => `${(dataEntry.value*100)/500}%`}
-            labelStyle= {{...defaultLabelStyle}}
-            segmentsStyle={{ transition: 'stroke .3s' }}
-
-            />}
-        </div>
+            <table className="table-auto mx-6 border-2 border-double border-gray rounded-lg">
+              <thead>
+                <tr>
+                  <th className="mx-6">Player</th>
+                  <th>Price</th>
+                  <th>Bid</th>
+                </tr>
+              </thead>
+              <tbody>
+                {suggestedTeam.length > 0 &&
+                  suggestedTeam.map(player => (
+                    // TODO Add solid borders between according to position 
+                    <tr key={player.player_name} className="border-2">
+                      <td >
+                        <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
+                          <span>{`Team: ${player.Team}, games: ${player.games}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}, MPG average rating: ${player.average}`}</span>
+                        </ReactTooltip>
+                        <span data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</span>
+                      </td>
+                      <td className="text-center"> {player.price} </td>
+                      <td className="text-center" style={getPositionWeightedColor(Math.min(1, player.bid / (player.price * 3)), player.mpg_position)}> <strong>{player.bid}</strong> </td>
+                    </tr>
+                  )
+                  )
+                }
+                <tr className="total-row">
+                  <td className="text-center"><strong>Σ</strong></td>
+                  <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce(((a, b) => a + b.price), 0) : 0}</td>
+                  <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce(((a, b) => a + b.bid), 0) : 0}</td>
+                </tr>
+              </tbody>
+            </table>
+            <span>Team MPG rating: <b>{suggestedTeam.length > 0 ? (suggestedTeam.reduce(((a, b) => a + b.average), 0) / suggestedTeam.length).toFixed(2) : 0}</b></span>
+          </div>
+          <div >
+            <h2><strong>Total bids per department</strong></h2>
+            <br />
+            {expenseData.length > 0 &&
+              <PieChart
+                data={expenseData}
+                style={{ height: '250px' }}
+                label={({ dataEntry }) => `${(dataEntry.value * 100) / 500}%`}
+                labelStyle={{ ...defaultLabelStyle }}
+                segmentsStyle={{ transition: 'stroke .3s' }}
+                segmentsShift={1}
+                className="mx-6"
+              />}
+          </div>
+        </div>)}
       </div>
+
       <div>
 
       </div>
