@@ -74,6 +74,11 @@ function App() {
     setUserPrefs({ ...userPrefs, ...updatedWeights })
   }
 
+  const handleTryAgain = () => {
+    setSuggestedTeam([])
+    setExpenseData([])
+    setTeamAnalytics([])
+  }
   const handlePrefSubmit = () => {
     setSuggestedTeam([])
     setExpenseData([])
@@ -160,125 +165,128 @@ function App() {
     <div>
       <Header />
       <div className="p-4 justify-center text-center md:flex">
-        <FormControl>
+        {suggestedTeam.length === 0 &&
+          <FormControl>
 
-          {/* League */}
-          <div>
-            <h2><strong>League</strong></h2>
-            <Select
-              labelId="league-select-label"
-              id="league-selected-id"
-              value={userPrefs.league}
-              onChange={handleChange}
-              name="league"
+            {/* League */}
+            <div>
+              <h2><strong>League</strong></h2>
+              <Select
+                labelId="league-select-label"
+                id="league-selected-id"
+                value={userPrefs.league}
+                onChange={handleChange}
+                name="league"
+              >
+                {qs.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
+                  <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                )
+                )}
+              </Select>
+            </div>
+            <br />
+
+            {/* Budget */}
+            <div>
+              <h2><strong>Bidding power</strong></h2>
+
+              <Slider
+                defaultValue={2}
+                aria-labelledby="budget-slider"
+                valueLabelDisplay="auto"
+                step={1}
+                marks={biddingMarks}
+                min={1}
+                max={3}
+                onChangeCommitted={handleBidSlide}
+                name="init_budget"
+              />
+            </div>
+
+            {/* Attack prefs */}
+            <div>
+              <h2><strong>Attack  - top criteria</strong></h2>
+              <Select
+                labelId="att-pref-label"
+                id="att-prefs-id"
+                value={userPrefs.att_pref}
+                onChange={handleChange}
+                name="att_pref"
+              >
+                {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                  <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                )
+                )}
+              </Select>
+            </div>
+
+            <br />
+
+
+            {/* Midfield prefs */}
+            <div>
+              <h2><strong>Midfield  - top criteria</strong></h2>
+              <Select
+                labelId="mid-pref-label"
+                id="mid-prefs-id"
+                name="mid_pref"
+                value={userPrefs.mid_pref}
+                onChange={handleChange}
+              >
+                {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                  <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                )
+                )}
+              </Select>
+            </div>
+            <br />
+
+
+            {/* Defence prefs */}
+            <div>
+              <h2><strong>Defence  - top criteria</strong></h2>
+              <Select
+                labelId="def-pref-label"
+                id="def-prefs-id"
+                name="def_pref"
+                value={userPrefs.def_pref}
+                onChange={handleChange}
+              >
+                {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                  <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                )
+                )}
+              </Select>
+            </div>
+            <br />
+            <div>
+              <h2><strong>Budget allocation per department</strong></h2>
+              <p className="italic text-center">GK / Def / Mid / Att</p>
+              <Slider
+                valueLabelDisplay="auto"
+                min={0}
+                max={100}
+                aria-labelledby="track-inverted-range-slider"
+                defaultValue={[10, 40, 70]}
+                onChangeCommitted={handleAllocationChange}
+              />
+            </div>
+            <br />
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              onClick={handlePrefSubmit}
             >
-              {qs.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
-                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-              )
-              )}
-            </Select>
-          </div>
-          <br />
-
-          {/* Budget */}
-          <div>
-            <h2><strong>Bidding power</strong></h2>
-
-            <Slider
-              defaultValue={2}
-              aria-labelledby="budget-slider"
-              valueLabelDisplay="auto"
-              step={1}
-              marks={biddingMarks}
-              min={1}
-              max={3}
-              onChangeCommitted={handleBidSlide}
-              name="init_budget"
-            />
-          </div>
-
-          {/* Attack prefs */}
-          <div>
-            <h2><strong>Attack  - top criteria</strong></h2>
-            <Select
-              labelId="att-pref-label"
-              id="att-prefs-id"
-              value={userPrefs.att_pref}
-              onChange={handleChange}
-              name="att_pref"
-            >
-              {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-              )
-              )}
-            </Select>
-          </div>
-
-          <br />
+              Build team 🚀
+            </Button>
+            <LoadingIndicator className="p-4 mx-8" />
+          </FormControl>}
 
 
-          {/* Midfield prefs */}
-          <div>
-            <h2><strong>Midfield  - top criteria</strong></h2>
-            <Select
-              labelId="mid-pref-label"
-              id="mid-prefs-id"
-              name="mid_pref"
-              value={userPrefs.mid_pref}
-              onChange={handleChange}
-            >
-              {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-              )
-              )}
-            </Select>
-          </div>
-          <br />
-
-
-          {/* Defence prefs */}
-          <div>
-            <h2><strong>Defence  - top criteria</strong></h2>
-            <Select
-              labelId="def-pref-label"
-              id="def-prefs-id"
-              name="def_pref"
-              value={userPrefs.def_pref}
-              onChange={handleChange}
-            >
-              {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-              )
-              )}
-            </Select>
-          </div>
-          <br />
-          <div>
-            <h2><strong>Budget allocation per department</strong></h2>
-            <p className="italic text-center">GK / Def / Mid / Att</p>
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={100}
-              aria-labelledby="track-inverted-range-slider"
-              defaultValue={[10, 40, 70]}
-              onChangeCommitted={handleAllocationChange}
-            />
-          </div>
-          <br />
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            onClick={handlePrefSubmit}
-          >
-            Build team 🚀
-          </Button>
-        </FormControl>
-
-        <LoadingIndicator className="mx-8" />
+        
         {suggestedTeam.length > 0 && (
-          <div id="results" className="flex">
+          <div id="results" className="p-4 justify-center text-center md:flex">
             <div>
               <h2><strong>Suggested team</strong></h2>
 
@@ -315,7 +323,7 @@ function App() {
                   </tr>
                 </tbody>
               </table>
-              <br/>
+              <br />
               <span>Team MPG rating: <b>{suggestedTeam.length > 0 ? (suggestedTeam.reduce(((a, b) => a + b.average), 0) / suggestedTeam.length).toFixed(2) : 0}</b> / 10 </span>
             </div>
             <div >
@@ -332,10 +340,21 @@ function App() {
                     segmentsShift={1}
                     className="mx-6"
                   />
-                  <br/>
+                  <br />
+
                   {teamAnalytics && (
                     <Radar data={teamAnalytics} options={radarChartOptions} />)}
+
                 </div>}
+                <div><Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                onClick={handleTryAgain}
+              >
+                Try again
+              </Button></div>
+
 
             </div>
           </div>)}
