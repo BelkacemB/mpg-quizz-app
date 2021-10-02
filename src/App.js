@@ -148,7 +148,7 @@ function App() {
             <h2><strong>Bidding power</strong></h2>
 
             <Slider
-              defaultValue={300}
+              defaultValue={2}
               aria-labelledby="budget-slider"
               valueLabelDisplay="auto"
               step={1}
