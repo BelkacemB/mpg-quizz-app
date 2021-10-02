@@ -117,7 +117,7 @@ function App() {
     if (['xG', 'team_xG_against'].includes(criteria)) {
       score *= 18
     }
-    return score
+    return score.toFixed(2)
   }
 
   useEffect(() => {
@@ -128,7 +128,6 @@ function App() {
         { title: 'Defence', value: getDepartmentTotal(suggestedTeam, 'D'), color: getPositionWeightedColor(0.8, 'D')['background-color'] },
         { title: 'Goalkeepers', value: getDepartmentTotal(suggestedTeam, 'G'), color: getPositionWeightedColor(0.8, 'G')['background-color'] }
       ])
-      // TODO Do a custom scale 
       setTeamAnalytics({
         labels: ['Attack', 'Midfield', 'Defence'],
         datasets: [
@@ -138,8 +137,8 @@ function App() {
               computeAggScoreForDepartmentAndCriteria(suggestedTeam, 'average', 'A'),
               computeAggScoreForDepartmentAndCriteria(suggestedTeam, 'average', 'M'),
               computeAggScoreForDepartmentAndCriteria(suggestedTeam, 'average', 'D')],
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(97, 97, 97, 0.05)',
+            borderColor: 'rgba(255, 98, 0, 1)',
             borderWidth: 1,
           }
         ]
@@ -149,7 +148,10 @@ function App() {
 
   const radarChartOptions = {
     scale: {
-      ticks: { beginAtZero: true },
+      r: {
+        suggestedMin: 4.8,
+        suggestedMax: 7
+      },
     },
   };
 
@@ -281,7 +283,7 @@ function App() {
               <h2><strong>Suggested team</strong></h2>
 
 
-              <table className="table-auto mx-6 border-2 border-double border-gray rounded-lg">
+              <table className="table-auto mx-6 rounded-lg">
                 <thead>
                   <tr>
                     <th className="mx-6">Player</th>
@@ -293,7 +295,7 @@ function App() {
                   {suggestedTeam.length > 0 &&
                     suggestedTeam.map(player => (
                       // TODO Add solid borders between according to position 
-                      <tr key={player.player_name} className="border-2">
+                      <tr key={player.player_name} className="border-2 rounded">
                         <td >
                           <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
                             <span>{`Team: ${player.Team}, games: ${player.games}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}, MPG average rating: ${player.average}`}</span>
@@ -313,7 +315,8 @@ function App() {
                   </tr>
                 </tbody>
               </table>
-              <span>Team MPG rating: <b>{suggestedTeam.length > 0 ? (suggestedTeam.reduce(((a, b) => a + b.average), 0) / suggestedTeam.length).toFixed(2) : 0}</b></span>
+              <br/>
+              <span>Team MPG rating: <b>{suggestedTeam.length > 0 ? (suggestedTeam.reduce(((a, b) => a + b.average), 0) / suggestedTeam.length).toFixed(2) : 0}</b> / 10 </span>
             </div>
             <div >
               <h2><strong>Total bids per department</strong></h2>
@@ -329,6 +332,7 @@ function App() {
                     segmentsShift={1}
                     className="mx-6"
                   />
+                  <br/>
                   {teamAnalytics && (
                     <Radar data={teamAnalytics} options={radarChartOptions} />)}
                 </div>}
