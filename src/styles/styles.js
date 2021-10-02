@@ -1,6 +1,11 @@
-export const getPositionWeightedColor = (weight, position) => {
+export const getPositionWeightedBackgroundColor = (weight, position) => {
     let defStyle = {'background-color': `hsl(${positionColorMap[position]},100%,65%, ${weight})`};
     return defStyle;
+}
+
+export const getPositionWeightedColor = (weight, position) => {
+    let color = `hsl(${positionColorMap[position]},100%,65%, ${weight})`;
+    return color;
 }
 
 export const positionColorMap = {
