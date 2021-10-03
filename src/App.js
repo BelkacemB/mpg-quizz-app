@@ -306,20 +306,20 @@ function App() {
         {suggestedTeam.length > 0 && (
           <div id="results" className="p-4 md:flex">
             <div>
-              <table className="table-auto mx-6 rounded-lg">
-                <thead>
+              <table className="table-auto mx-6 fade-in divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                   <tr>
-                    <th className="mx-6">Player</th>
-                    <th>Price</th>
-                    <th>Bid</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Player</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bid</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-white divide-y divide-gray-200">
                   {suggestedTeam.length > 0 &&
                     suggestedTeam.map(player => (
                       // TODO Add solid borders between according to position 
                       <tr key={player.player_name} className="border-2 rounded">
-                        <td >
+                        <td className="px-6 py-2 whitespace-nowrap">
                           <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
                             <span>{`Team: ${player.Team}, games: ${player.games}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}, MPG average rating: ${player.average}`}</span>
                           </ReactTooltip>
@@ -338,6 +338,7 @@ function App() {
                   </tr>
                 </tbody>
               </table>
+              <br />
               <br />
               <span>Team MPG rating: <b>{suggestedTeam.length > 0 ? (suggestedTeam.reduce(((a, b) => a + b.average), 0) / suggestedTeam.length).toFixed(2) : 0}</b> / 10 </span>
             </div>
