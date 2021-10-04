@@ -1,18 +1,17 @@
 import './App.css';
-import questions from './Questions';
 import React, { useState, useEffect } from 'react';
-import { FormControl, Button, Select, MenuItem, Slider } from '@material-ui/core';
 import Footer from './Footer';
 import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
-import { LoadingIndicator } from './LoadingIndicator';
-import ReactTooltip from 'react-tooltip';
-import { getPositionWeightedBackgroundColor, getPositionWeightedColor } from './styles/styles'
-import { Pie, Radar } from 'react-chartjs-2';
+import { getPositionWeightedColor } from './styles/styles'
+import { MPGForm } from './components/MPGForm';
+import { TeamTable } from './components/TeamTable';
+import { Analytics } from './components/Analytics';
+import { LoadingIndicator } from './LoadingIndicator'
+import { Modal } from '@material-ui/core';
 
 function App() {
 
-  const qs = questions
 
   const [userPrefs, setUserPrefs] = useState({
     // Default values
@@ -30,54 +29,15 @@ function App() {
   const [suggestedTeam, setSuggestedTeam] = useState([])
   const [expenseData, setExpenseData] = useState({})
   const [teamAnalytics, setTeamAnalytics] = useState({})
+  const [modalOpen, setModalOpen] = useState(false)
 
-  const biddingMarks = [
-    {
-      value: 1,
-      label: 'x1'
-    },
-    {
-      value: 2,
-      label: 'x2'
-    },
-    {
-      value: 3,
-      label: 'x3'
-    },
-  ]
-
-  const handleChange = (event) => {
-    let updatedValue = {}
-    updatedValue[event.target.name] = event.target.value
-    setUserPrefs({ ...userPrefs, ...updatedValue })
-  }
-
-  const initBudgetMapper = {
-    1: 400,
-    2: 300,
-    3: 200
-  }
-
-  const handleBidSlide = (...event) => {
-    let updatedValue = {}
-    updatedValue['init_budget'] = initBudgetMapper[event[1]]
-    setUserPrefs({ ...userPrefs, ...updatedValue })
-  }
-
-  const handleAllocationChange = (...event) => {
-    let updatedWeights = {}
-    updatedWeights['gk_weight'] = event[1][0] / 100
-    updatedWeights['def_weight'] = (event[1][1] - event[1][0]) / 100
-    updatedWeights['mid_weight'] = (event[1][2] - event[1][1]) / 100
-    updatedWeights['att_weight'] = (100 - event[1][2]) / 100
-    setUserPrefs({ ...userPrefs, ...updatedWeights })
-  }
-
-  const handleTryAgain = () => {
+  const handleModalClose = () => {
     setSuggestedTeam([])
     setExpenseData({})
     setTeamAnalytics({})
+    setModalOpen(false)
   }
+
   const handlePrefSubmit = () => {
     setSuggestedTeam([])
     setExpenseData({})
@@ -166,208 +126,40 @@ function App() {
           }
         ]
       })
+      setModalOpen(true)
     }
   }, [suggestedTeam])
 
-  const radarChartOptions = {
-    scale: {
-      r: {
-        suggestedMin: 4.8,
-        suggestedMax: 7
-      },
-    },
-  };
 
 
   return (
     <div>
       <Header />
       <div className="p-4 justify-center text-center md:flex">
-        {suggestedTeam.length === 0 &&
-          <FormControl>
-
-            {/* League */}
-            <div>
-              <h2><strong>League</strong></h2>
-              <Select
-                labelId="league-select-label"
-                id="league-selected-id"
-                value={userPrefs.league}
-                onChange={handleChange}
-                name="league"
-              >
-                {qs.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
-                  <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                )
-                )}
-              </Select>
-            </div>
-            <br />
-
-            {/* Budget */}
-            <div>
-              <h2><strong>Bidding power</strong></h2>
-
-              <Slider
-                defaultValue={2}
-                aria-labelledby="budget-slider"
-                valueLabelDisplay="auto"
-                step={1}
-                marks={biddingMarks}
-                min={1}
-                max={3}
-                onChangeCommitted={handleBidSlide}
-                name="init_budget"
-              />
-            </div>
-
-            {/* Attack prefs */}
-            <div>
-              <h2><strong>Attack  - top criteria</strong></h2>
-              <Select
-                labelId="att-pref-label"
-                id="att-prefs-id"
-                value={userPrefs.att_pref}
-                onChange={handleChange}
-                name="att_pref"
-              >
-                {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                  <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                )
-                )}
-              </Select>
-            </div>
-
-            <br />
-
-
-            {/* Midfield prefs */}
-            <div>
-              <h2><strong>Midfield  - top criteria</strong></h2>
-              <Select
-                labelId="mid-pref-label"
-                id="mid-prefs-id"
-                name="mid_pref"
-                value={userPrefs.mid_pref}
-                onChange={handleChange}
-              >
-                {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                  <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                )
-                )}
-              </Select>
-            </div>
-            <br />
-
-
-            {/* Defence prefs */}
-            <div>
-              <h2><strong>Defence  - top criteria</strong></h2>
-              <Select
-                labelId="def-pref-label"
-                id="def-prefs-id"
-                name="def_pref"
-                value={userPrefs.def_pref}
-                onChange={handleChange}
-              >
-                {qs.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                  <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                )
-                )}
-              </Select>
-            </div>
-            <br />
-            <div>
-              <h2><strong>Budget allocation per department</strong></h2>
-              <p className="italic text-center">GK / Def / Mid / Att</p>
-              <Slider
-                valueLabelDisplay="auto"
-                min={0}
-                max={100}
-                aria-labelledby="track-inverted-range-slider"
-                defaultValue={[10, 40, 70]}
-                onChangeCommitted={handleAllocationChange}
-              />
-            </div>
-            <br />
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              onClick={handlePrefSubmit}
-            >
-              Build team 🚀
-            </Button>
-            <LoadingIndicator className="p-4 mx-8" />
-          </FormControl>}
-
+        <React.Fragment>
+          <MPGForm initialUserPreferences={userPrefs} setUserPreferences={setUserPrefs} onSubmit={handlePrefSubmit} />
+          <LoadingIndicator />
+        </React.Fragment>
 
 
         {suggestedTeam.length > 0 && (
-          <div id="results" className="p-4 md:flex">
-            <div>
-              <table className="table-auto mx-6 fade-in divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Player</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bid</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {suggestedTeam.length > 0 &&
-                    suggestedTeam.map(player => (
-                      // TODO Add solid borders between according to position 
-                      <tr key={player.player_name} className="border-2 rounded">
-                        <td className="px-6 py-2 whitespace-nowrap">
-                          <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
-                            <span>{`Team: ${player.Team}, games: ${player.games}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}, MPG average rating: ${player.average}`}</span>
-                          </ReactTooltip>
-                          <span data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</span>
-                        </td>
-                        <td className="text-center"> {player.price} </td>
-                        <td className="text-center" style={getPositionWeightedBackgroundColor(Math.min(1, player.bid / (player.price * 3)), player.mpg_position)}> <strong>{player.bid}</strong> </td>
-                      </tr>
-                    )
-                    )
-                  }
-                  <tr className="total-row">
-                    <td className="text-center"><strong>Σ</strong></td>
-                    <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce(((a, b) => a + b.price), 0) : 0}</td>
-                    <td className="text-center">{suggestedTeam.length > 0 ? suggestedTeam.reduce(((a, b) => a + b.bid), 0) : 0}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <br />
-              <br />
-              <span>Team MPG rating: <b>{suggestedTeam.length > 0 ? (suggestedTeam.reduce(((a, b) => a + b.average), 0) / suggestedTeam.length).toFixed(2) : 0}</b> / 10 </span>
+
+          <Modal
+            open={modalOpen}
+            onClose={handleModalClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description">
+            <div className="p-4 justify-center text-center md:flex bg-white shadow" >
+              <TeamTable suggestedTeam={suggestedTeam} />
+              <div>
+                <h2><strong>Analytics</strong></h2>
+                <br />
+                {expenseData &&
+                  <Analytics expenseData={expenseData} teamAnalytics={teamAnalytics} />
+                }
+              </div>
             </div>
-            <div>
-              <h2><strong>Analytics</strong></h2>
-              <br />
-              {expenseData &&
-                <div>
-                  <Pie
-                    data={expenseData}
-                  />
-                  <br />
-
-                  {teamAnalytics && (
-                    <Radar data={teamAnalytics} options={radarChartOptions} />)}
-
-                </div>}
-              <div><Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                onClick={handleTryAgain}
-              >
-                Try again
-              </Button></div>
-
-
-            </div>
-          </div>)}
+          </Modal>)}
       </div>
 
       <div>
