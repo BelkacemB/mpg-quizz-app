@@ -154,7 +154,7 @@ function App() {
             fullWidth={true}
             aria-describedby="modal-modal-description">
             <DialogTitle>Suggested team</DialogTitle>
-            <div className="p-4 justify-center text-center md:flex bg-white shadow" >
+            <div className="justify-center text-center md:flex bg-white shadow" >
               <TeamTable suggestedTeam={suggestedTeam} />
               <div>
                 <h2><strong>Analytics</strong></h2>
