@@ -16,6 +16,7 @@ export const Analytics = (props) => {
 
     return (
         <div>
+        <h2>Bids per department</h2>
         <Pie
           data={props.expenseData}
         />

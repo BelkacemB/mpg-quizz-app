@@ -1,14 +1,14 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import Footer from './Footer';
 import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
+import { usePromiseTracker } from 'react-promise-tracker';
 import { getPositionWeightedColor } from './styles/styles'
 import { MPGForm } from './components/MPGForm';
 import { TeamTable } from './components/TeamTable';
 import { Analytics } from './components/Analytics';
 import { LoadingIndicator } from './LoadingIndicator'
-import { Modal } from '@material-ui/core';
+import { Dialog, DialogTitle } from '@material-ui/core';
 
 function App() {
 
@@ -30,6 +30,7 @@ function App() {
   const [expenseData, setExpenseData] = useState({})
   const [teamAnalytics, setTeamAnalytics] = useState({})
   const [modalOpen, setModalOpen] = useState(false)
+  const { promiseInProgress } = usePromiseTracker();
 
   const handleModalClose = () => {
     setSuggestedTeam([])
@@ -130,25 +131,29 @@ function App() {
     }
   }, [suggestedTeam])
 
-
-
   return (
     <div>
       <Header />
       <div className="p-4 justify-center text-center md:flex">
         <React.Fragment>
-          <MPGForm initialUserPreferences={userPrefs} setUserPreferences={setUserPrefs} onSubmit={handlePrefSubmit} />
-          <LoadingIndicator />
+          {!promiseInProgress &&
+            <MPGForm initialUserPreferences={userPrefs} setUserPreferences={setUserPrefs} onSubmit={handlePrefSubmit} />
+
+          }
+          {promiseInProgress &&
+
+            <LoadingIndicator className="fade-in"/>
+          }
         </React.Fragment>
-
-
         {suggestedTeam.length > 0 && (
 
-          <Modal
+          <Dialog
             open={modalOpen}
             onClose={handleModalClose}
-            aria-labelledby="modal-modal-title"
+            maxWidth="md"
+            fullWidth={true}
             aria-describedby="modal-modal-description">
+            <DialogTitle>Suggested team</DialogTitle>
             <div className="p-4 justify-center text-center md:flex bg-white shadow" >
               <TeamTable suggestedTeam={suggestedTeam} />
               <div>
@@ -159,15 +164,13 @@ function App() {
                 }
               </div>
             </div>
-          </Modal>)}
+          </Dialog>)}
       </div>
 
       <div>
 
       </div>
-      <div>
-        <Footer />
-      </div>
+
     </div>
   )
 
