@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { FormControl, Button, Select, MenuItem, Slider } from '@material-ui/core';
+import { FormControl, Button, Select, MenuItem, Slider} from '@material-ui/core';
 import questions from '../Questions';
+import { svgFlagPerCountry } from '../styles/styles';
 
 export const MPGForm = (props) => {
 
@@ -9,20 +10,20 @@ export const MPGForm = (props) => {
         1: 400,
         2: 300,
         3: 200
-      }
+    }
 
     const biddingMarks = [
         {
             value: 1,
-            label: 'x1'
+            label: '-4'
         },
         {
             value: 2,
-            label: 'x2'
+            label: '6-8'
         },
         {
             value: 3,
-            label: 'x3'
+            label: '10+'
         },
     ]
 
@@ -48,11 +49,11 @@ export const MPGForm = (props) => {
     }
 
     return (
-        <FormControl>
+        <FormControl className="border-2 rounded" >
 
             {/* League */}
-            <div>
-                <h2><strong>League</strong></h2>
+            <div >
+                <h2><strong>Ligue</strong></h2>
                 <Select
                     labelId="league-select-label"
                     id="league-selected-id"
@@ -61,7 +62,7 @@ export const MPGForm = (props) => {
                     name="league"
                 >
                     {questions.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
-                        <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                        <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText} {svgFlagPerCountry[answer.answerValue]}</MenuItem>
                     )
                     )}
                 </Select>
@@ -70,7 +71,7 @@ export const MPGForm = (props) => {
 
             {/* Budget */}
             <div>
-                <h2><strong>Bidding power</strong></h2>
+                <h2><strong>Nombre de participants</strong></h2>
 
                 <Slider
                     defaultValue={2}
@@ -85,64 +86,66 @@ export const MPGForm = (props) => {
                 />
             </div>
 
-            {/* Attack prefs */}
-            <div>
-                <h2><strong>Attack  - top criteria</strong></h2>
-                <Select
-                    labelId="att-pref-label"
-                    id="att-prefs-id"
-                    value={props.initialUserPreferences.att_pref}
-                    onChange={handleChange}
-                    name="att_pref"
-                >
-                    {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                        <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                    )
-                    )}
-                </Select>
+            <div id="departments" className="flex">
+                {/* Defence prefs */}
+                <div className='mx-2'>
+                    <h2><strong>Défense</strong></h2>
+                    <Select
+                        labelId="def-pref-label"
+                        id="def-prefs-id"
+                        name="def_pref"
+                        value={props.initialUserPreferences.def_pref}
+                        onChange={handleChange}
+                    >
+                        {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                            <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                        )
+                        )}
+                    </Select>
+                </div>
+
+                {/* Midfield prefs */}
+                <div className='mx-2'>
+                    <h2><strong>Milieu</strong></h2>
+                    <Select
+                        labelId="mid-pref-label"
+                        id="mid-prefs-id"
+                        name="mid_pref"
+                        value={props.initialUserPreferences.mid_pref}
+                        onChange={handleChange}
+                    >
+                        {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                            <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                        )
+                        )}
+                    </Select>
+                </div>
+                <br />
+
+
+
+
+                <div className='mx-2'>
+                    <h2><strong>Attaque</strong></h2>
+                    <Select
+                        labelId="att-pref-label"
+                        id="att-prefs-id"
+                        value={props.initialUserPreferences.att_pref}
+                        onChange={handleChange}
+                        name="att_pref"
+                    >
+                        {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                            <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                        )
+                        )}
+                    </Select>
+                    <br/>
+{/*                     <TextField height='30px' className="block" variant="filled" id="filled-basic" label="Filled" />
+ */}                </div>
             </div>
-
-            <br />
-
-
-            {/* Midfield prefs */}
-            <div>
-                <h2><strong>Midfield  - top criteria</strong></h2>
-                <Select
-                    labelId="mid-pref-label"
-                    id="mid-prefs-id"
-                    name="mid_pref"
-                    value={props.initialUserPreferences.mid_pref}
-                    onChange={handleChange}
-                >
-                    {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                        <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                    )
-                    )}
-                </Select>
-            </div>
-            <br />
-
-
-            {/* Defence prefs */}
-            <div>
-                <h2><strong>Defence  - top criteria</strong></h2>
-                <Select
-                    labelId="def-pref-label"
-                    id="def-prefs-id"
-                    name="def_pref"
-                    value={props.initialUserPreferences.def_pref}
-                    onChange={handleChange}
-                >
-                    {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                        <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                    )
-                    )}
-                </Select>
-            </div>
             <br />
             <div>
-                <h2><strong>Budget allocation per department</strong></h2>
+                <h2><strong>Budget par département</strong></h2>
                 <p className="italic text-center">GK / Def / Mid / Att</p>
                 <Slider
                     valueLabelDisplay="auto"
@@ -160,7 +163,7 @@ export const MPGForm = (props) => {
                 type="submit"
                 onClick={props.onSubmit}
             >
-                Build team 🚀
+                Build 🚀
             </Button>
         </FormControl>
     )
