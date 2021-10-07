@@ -5,6 +5,7 @@ import questions from '../Questions';
 import { svgFlagPerCountry } from '../styles/styles';
 
 export const MPGForm = (props) => {
+    // If you need to update the weights dynamically for each department: you need to have user prefs state here as well 
 
     const initBudgetMapper = {
         1: 400,
@@ -85,8 +86,14 @@ export const MPGForm = (props) => {
                     name="init_budget"
                 />
             </div>
-
+            {/* TODO Transform this into a table ? */}
             <div id="departments" className="flex">
+                <div className='mx-2'>
+                    <br/>
+                    <p className="italic mt-0">Top critère</p>
+                    <p className="italic mt-2">Budget</p>
+                </div>
+                
                 {/* Defence prefs */}
                 <div className='mx-2'>
                     <h2><strong>Défense</strong></h2>
@@ -102,6 +109,8 @@ export const MPGForm = (props) => {
                         )
                         )}
                     </Select>
+                    <br/>
+                    <p>{ `${props.initialUserPreferences.def_weight * 100} %`}</p>
                 </div>
 
                 {/* Midfield prefs */}
@@ -119,6 +128,7 @@ export const MPGForm = (props) => {
                         )
                         )}
                     </Select>
+                    <p>{ `${props.initialUserPreferences.mid_weight * 100} %`}</p>
                 </div>
                 <br />
 
@@ -139,9 +149,8 @@ export const MPGForm = (props) => {
                         )
                         )}
                     </Select>
-                    <br/>
-{/*                     <TextField height='30px' className="block" variant="filled" id="filled-basic" label="Filled" />
- */}                </div>
+                    <p>{ `${props.initialUserPreferences.att_weight * 100} %`}</p>
+                </div>
             </div>
             <br />
             <div>

@@ -153,11 +153,11 @@ function App() {
             maxWidth="md"
             fullWidth={true}
             aria-describedby="modal-modal-description">
-            <DialogTitle>Suggested team</DialogTitle>
+            <DialogTitle>Équipe proposée</DialogTitle>
             <div className="justify-center text-center md:flex bg-white shadow" >
               <TeamTable suggestedTeam={suggestedTeam} />
               <div>
-                <h2><strong>Analytics</strong></h2>
+                <h2><strong>Données</strong></h2>
                 <br />
                 {expenseData &&
                   <Analytics expenseData={expenseData} teamAnalytics={teamAnalytics} />
