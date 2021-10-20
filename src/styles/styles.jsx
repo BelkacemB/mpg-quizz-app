@@ -28,7 +28,7 @@ export const defaultLabelStyle = {
   };
 
 export const svgFlagPerCountry = {
-    'France': (<img src={FranceIcon} width="20px" cclassName="inline mx-2"/>),
+    'France': (<img src={FranceIcon} width="20px" className="inline mx-2"/>),
     'England': (<img src={EnglandIcon} width="20px" className="inline mx-2"/>),
     'Spain': (<img src={SpainIcon} width="20px" className="inline mx-2"/>),
     'Italy': (<img src={ItalyIcon} width="20px" className="inline mx-2"/>),
