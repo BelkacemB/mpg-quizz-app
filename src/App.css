@@ -11,6 +11,10 @@
   animation: fadein 3s;
 }
 
+p {
+  margin-top: 1rem;
+}
+
 @keyframes fadein {
   from { opacity: 0; }
   to   { opacity: 1; }

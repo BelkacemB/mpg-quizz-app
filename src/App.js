@@ -9,6 +9,7 @@ import { TeamTable } from './components/TeamTable';
 import { Analytics } from './components/Analytics';
 import { LoadingIndicator } from './LoadingIndicator'
 import { Dialog, DialogTitle } from '@material-ui/core';
+import { Description } from './components/Description';
 
 function App() {
 
@@ -135,15 +136,17 @@ function App() {
   return (
     <div>
       <Header />
-      <div className="p-4 justify-center text-center md:flex">
+      <div className="p-4 text-center md:flex">
         <React.Fragment>
           {!promiseInProgress &&
-            <MPGForm initialUserPreferences={userPrefs} setUserPreferences={setUserPrefs} onSubmit={handlePrefSubmit} />
-
+            <div className="md:flex">
+              <Description />
+              <MPGForm initialUserPreferences={userPrefs} setUserPreferences={setUserPrefs} onSubmit={handlePrefSubmit} />
+            </div>
           }
           {promiseInProgress &&
 
-            <LoadingIndicator className="fade-in"/>
+            <LoadingIndicator className="fade-in" />
           }
         </React.Fragment>
         {suggestedTeam.length > 0 && (
