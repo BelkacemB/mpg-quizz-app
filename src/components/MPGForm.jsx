@@ -42,13 +42,36 @@ export const MPGForm = (props) => {
         props.setUserPreferences({ ...props.initialUserPreferences, ...updatedValue })
     }
 
-    const handleAllocationChange = (...event) => {
-        let updatedWeights = {}
-        updatedWeights['gk_weight'] = event[1][0] / 100
-        updatedWeights['def_weight'] = (event[1][1] - event[1][0]) / 100
-        updatedWeights['mid_weight'] = (event[1][2] - event[1][1]) / 100
-        updatedWeights['att_weight'] = (100 - event[1][2]) / 100
-        props.setUserPreferences({ ...props.initialUserPreferences, ...updatedWeights })
+    const budget_types = {
+        'Equilibrée' : {
+            gk_weight: 0.1,
+            def_weight: 0.3,
+            mid_weight: 0.3,
+            att_weight: 0.3
+        },
+        'Attaque+' : {
+            gk_weight: 0.07,
+            def_weight: 0.23,
+            mid_weight: 0.3,
+            att_weight: 0.4
+        },
+        'Milieu+' : {
+            gk_weight: 0.07,
+            def_weight: 0.23,
+            mid_weight: 0.4,
+            att_weight: 0.3
+        },
+        'Défense+' : {
+            gk_weight: 0.1,
+            def_weight: 0.4,
+            mid_weight: 0.2,
+            att_weight: 0.3
+        }
+
+    }
+
+    const handleAllocationChange = (event) => {
+        props.setUserPreferences({...props.initialUserPreferences, ...budget_types[event.target.value]})
     }
 
     return (
@@ -164,7 +187,7 @@ export const MPGForm = (props) => {
                         id="allocation-id"
                         name="allocation"
                         onChange={handleAllocationChange}
-                        value='Attaque+'
+                        defaultValue={'Attaque+'}
                     >
                         {['Equilibrée', 'Attaque+', 'Milieu+', 'Défense+'].map(answer => (
                                     <MenuItem key={answer} value={answer}>{answer}</MenuItem>
