@@ -8,7 +8,7 @@ export const TeamTable = (props) => {
     let suggestedTeam = props.suggestedTeam
 
     return (
-        <div>
+        <div className='m-2'>
         <table className="table-auto md:mx-6 fade-in divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

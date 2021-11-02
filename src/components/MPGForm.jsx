@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { FormControl, Button, Select, MenuItem, Slider } from '@material-ui/core';
+import { FormControl, Button, Select, MenuItem, Slider} from '@material-ui/core';
 import questions from '../Questions';
 import { svgFlagPerCountry } from '../styles/styles';
 import { Paper } from '@mui/material';
@@ -75,46 +75,48 @@ export const MPGForm = (props) => {
     }
 
     return (
-        <Paper elevation={2}>
+        <Paper elevation={3} className="min-w-max p-6">
             <FormControl className="border-2 rounded" >
 
                 {/* League */}
-                <div >
-                    <h2><strong>Ligue</strong></h2>
-                    <Select
-                        labelId="league-select-label"
-                        id="league-selected-id"
-                        value={props.initialUserPreferences.league}
-                        onChange={handleChange}
-                        name="league"
-                    >
-                        {questions.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
-                            <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText} {svgFlagPerCountry[answer.answerValue]}</MenuItem>
-                        )
-                        )}
-                    </Select>
-                </div>
-                <br />
+                <Paper elevation={2} className="my-2">
+                    <div >
+                        <h2><strong>Ligue</strong></h2>
+                        <Select
+                            labelId="league-select-label"
+                            id="league-selected-id"
+                            value={props.initialUserPreferences.league}
+                            onChange={handleChange}
+                            name="league"
+                        >
+                            {questions.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
+                                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText} {svgFlagPerCountry[answer.answerValue]}</MenuItem>
+                            )
+                            )}
+                        </Select>
+                    </div>
+                    <br />
 
-                {/* Budget */}
-                <div className="mx-4">
-                    <h2><strong>Nombre de participants</strong></h2>
+                    {/* Budget */}
+                    <div className="mx-4">
+                        <h2><strong>Nombre de participants</strong></h2>
 
-                    <Slider
-                        defaultValue={2}
-                        aria-labelledby="budget-slider"
-                        valueLabelDisplay="auto"
-                        step={1}
-                        marks={biddingMarks}
-                        min={1}
-                        max={3}
-                        onChangeCommitted={handleBidSlide}
-                        name="init_budget"
-                    />
-                </div>
+                        <Slider
+                            defaultValue={2}
+                            aria-labelledby="budget-slider"
+                            valueLabelDisplay="auto"
+                            step={1}
+                            marks={biddingMarks}
+                            min={1}
+                            max={3}
+                            onChangeCommitted={handleBidSlide}
+                            name="init_budget"
+                        />
+                    </div>
+                </Paper>
+                <Paper elevation={2} className='my-2'>
                 <div id="departments" >
                     <div className='m-2'>
-                        <br />
                         <p className="text-lg font-bold">Critères</p>
                     </div>
 
@@ -178,16 +180,15 @@ export const MPGForm = (props) => {
                         </div>
                     </Box>
                 </div>
-                <br />
+                </Paper>
                 <div className="mx-4">
                     <h2><strong>Allocation budget</strong></h2>
-                    <p className="italic text-center">GK / Def / Mid / Att</p>
                     <Select
                         labelId="allocation-label"
                         id="allocation-id"
                         name="allocation"
                         onChange={handleAllocationChange}
-                        defaultValue={'Attaque+'}
+                        defaultValue={'Equilibrée'}
                     >
                         {['Equilibrée', 'Attaque+', 'Milieu+', 'Défense+'].map(answer => (
                                     <MenuItem key={answer} value={answer}>{answer}</MenuItem>

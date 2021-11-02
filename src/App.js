@@ -12,8 +12,7 @@ import { Dialog, DialogTitle } from '@material-ui/core';
 
 function App() {
 
-
-  const [userPrefs, setUserPrefs] = useState({
+  const initPrefs = {
     // Default values
     league: "England",
     init_budget: 300,
@@ -24,7 +23,8 @@ function App() {
     mid_weight: 0.3,
     def_weight: 0.3,
     gk_weight: 0.1
-  })
+  }
+  const [userPrefs, setUserPrefs] = useState(initPrefs)
 
   const [suggestedTeam, setSuggestedTeam] = useState([])
   const [expenseData, setExpenseData] = useState({})
@@ -33,6 +33,7 @@ function App() {
   const { promiseInProgress } = usePromiseTracker();
 
   const handleModalClose = () => {
+    setUserPrefs(initPrefs)
     setSuggestedTeam([])
     setExpenseData({})
     setTeamAnalytics({})
@@ -88,7 +89,7 @@ function App() {
   useEffect(() => {
     if (suggestedTeam.length > 0) {
       setExpenseData({
-        labels: ['Attack', 'Midfield', 'Defence', 'Goalkeeping'],
+        labels: ['Attaque', 'Milieu', 'Défense', 'Gardiens'],
         datasets: [{
           label: "% of bids",
           data: [
@@ -113,10 +114,10 @@ function App() {
         }]
       })
       setTeamAnalytics({
-        labels: ['Attack', 'Midfield', 'Defence'],
+        labels: ['Attaque', 'Milieu', 'Défense'],
         datasets: [
           {
-            label: "Team strengths",
+            label: "Note moyenne MPG par secteur",
             data: [
               computeAggScoreForDepartmentAndCriteria(suggestedTeam, 'average', 'A'),
               computeAggScoreForDepartmentAndCriteria(suggestedTeam, 'average', 'M'),
@@ -157,8 +158,6 @@ function App() {
             <div className="justify-center text-center md:flex bg-white shadow" >
               <TeamTable suggestedTeam={suggestedTeam} />
               <div>
-                <h2><strong>Données</strong></h2>
-                <br />
                 {expenseData &&
                   <Analytics expenseData={expenseData} teamAnalytics={teamAnalytics} />
                 }
