@@ -23,7 +23,8 @@ function App() {
     att_weight: 0.3,
     mid_weight: 0.3,
     def_weight: 0.3,
-    gk_weight: 0.1
+    gk_weight: 0.1,
+    team_limit: 3
   }
   const [userPrefs, setUserPrefs] = useState(initPrefs)
 

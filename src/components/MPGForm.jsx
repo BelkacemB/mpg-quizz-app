@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { FormControl, Button, Select, MenuItem, Slider} from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import questions from '../Questions';
 import { svgFlagPerCountry } from '../styles/styles';
 import { Paper } from '@mui/material';
 import { Box } from '@mui/system';
 
 export const MPGForm = (props) => {
-    // If you need to update the weights dynamically for each department: you need to have user prefs state here as well 
 
     const initBudgetMapper = {
         1: 400,
@@ -18,7 +18,7 @@ export const MPGForm = (props) => {
     const biddingMarks = [
         {
             value: 1,
-            label: '-4'
+            label: '4'
         },
         {
             value: 2,
@@ -99,8 +99,9 @@ export const MPGForm = (props) => {
 
                     {/* Budget */}
                     <div className="mx-4">
+                        <Tooltip title="Plus les participants sont nombreux, plus les enchères seront aggressives">
                         <h2><strong>Nombre de participants</strong></h2>
-
+                        </Tooltip>
                         <Slider
                             defaultValue={2}
                             aria-labelledby="budget-slider"
@@ -112,6 +113,22 @@ export const MPGForm = (props) => {
                             onChangeCommitted={handleBidSlide}
                             name="init_budget"
                         />
+                    </div>
+                    <div className="m-4">
+                        <Tooltip title="Pour éviter de dépendre de la forme d'une seule équipe">
+                            <h2><strong>Joueurs maximum par club</strong></h2>
+                        </Tooltip>
+                        <Select
+                            labelId="team-limit-label"
+                            id="team-limit-id"
+                            value={props.initialUserPreferences.team_limit}
+                            onChange={handleChange}
+                            name="team_limit"
+                        >
+                            {[2, 3, 4, 5].map(team_limit => (
+                                <MenuItem key={team_limit} value={team_limit}>{team_limit}</MenuItem>
+                            ))}
+                        </Select>  
                     </div>
                 </Paper>
                 <Paper elevation={2} className='my-2'>
@@ -182,7 +199,9 @@ export const MPGForm = (props) => {
                 </div>
                 </Paper>
                 <div className="mx-4">
-                    <h2><strong>Allocation budget</strong></h2>
+                    <Tooltip title="Quel département prioriser pour les enchères ?">
+                        <h2><strong>Allocation budget</strong></h2>
+                    </Tooltip>
                     <Select
                         labelId="allocation-label"
                         id="allocation-id"
