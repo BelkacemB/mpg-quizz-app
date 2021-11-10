@@ -10,6 +10,7 @@ import { Analytics } from './components/Analytics';
 import { LoadingIndicator } from './LoadingIndicator'
 import { Dialog, DialogTitle } from '@material-ui/core';
 import { Description } from './components/Description';
+import { TeamCount } from './components/TeamCount';
 
 function App() {
 
@@ -167,6 +168,8 @@ function App() {
                 }
               </div>
             </div>
+
+            <TeamCount suggestedTeam={suggestedTeam} />
           </Dialog>)}
       </div>
 
