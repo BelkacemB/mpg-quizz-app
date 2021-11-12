@@ -36,7 +36,6 @@ function App() {
   const { promiseInProgress } = usePromiseTracker();
 
   const handleModalClose = () => {
-    setUserPrefs(initPrefs)
     setSuggestedTeam([])
     setExpenseData({})
     setTeamAnalytics({})
@@ -66,7 +65,6 @@ function App() {
         .then(response => response.json())
         .then(data => {
           setSuggestedTeam(data);
-          console.log(data)
         }
         )
         .catch(error => console.log('error', error))

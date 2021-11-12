@@ -74,6 +74,8 @@ export const MPGForm = (props) => {
         props.setUserPreferences({...props.initialUserPreferences, ...budget_types[event.target.value]})
     }
 
+    const initBudgetKey = Object.keys(initBudgetMapper).find(key => initBudgetMapper[key] === props.initialUserPreferences.init_budget)
+
     return (
         <Paper elevation={3} className="min-w-max p-6">
             <FormControl className="border-2 rounded" >
@@ -103,7 +105,7 @@ export const MPGForm = (props) => {
                         <h2><strong>Nombre de participants</strong></h2>
                         </Tooltip>
                         <Slider
-                            defaultValue={2}
+                            defaultValue={initBudgetKey}
                             aria-labelledby="budget-slider"
                             valueLabelDisplay="auto"
                             step={1}
