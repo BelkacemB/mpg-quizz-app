@@ -162,7 +162,7 @@ function App() {
               <TeamTable suggestedTeam={suggestedTeam} />
               <div>
                 {expenseData &&
-                  <Analytics expenseData={expenseData} teamAnalytics={teamAnalytics} />
+                  <Analytics expenseData={expenseData} teamAnalytics={teamAnalytics} suggestedTeam={suggestedTeam} />
                 }
               </div>
             </div>

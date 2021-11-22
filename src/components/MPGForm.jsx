@@ -150,7 +150,6 @@ export const MPGForm = (props) => {
                                 name="def_pref"
                                 value={props.initialUserPreferences.def_pref}
                                 onChange={handleChange}
-                                fullWidth
                             >
                                 {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
                                     <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
