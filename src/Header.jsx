@@ -10,7 +10,7 @@ export const Header = () => {
         width="40"
         height="40"
       />{" "}
-      <span className="font-semibold text-xl tracking-tight"><a href="#home">MPG team builder</a></span>
+      <span className="font-semibold text-xl tracking-tight"><a href="#home">MPG Scout</a></span>
 
     </nav>
   );

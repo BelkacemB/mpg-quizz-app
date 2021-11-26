@@ -14,9 +14,9 @@ export const TeamTable = (props) => {
         <table className="table-auto md:mx-6 fade-in divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Player</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bid</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Joueur</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Offre</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">

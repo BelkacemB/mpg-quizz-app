@@ -9,7 +9,7 @@ export const LoadingIndicator = () => {
         <div>
             {promiseInProgress &&
             <div>
-            <p className="block italic text-center text-2xl mx-6">Optimizing...</p>
+            <p className="block italic text-center text-2xl mx-6">Optimisation...</p>
             <br/>
                     <img
                         alt=""
