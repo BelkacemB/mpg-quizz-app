@@ -17,7 +17,7 @@ function App() {
   const initPrefs = {
     // Default values
     league: "England",
-    init_budget: 300,
+    init_budget: 350,
     att_pref: 'average',
     mid_pref: 'average',
     def_pref: 'average',

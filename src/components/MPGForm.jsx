@@ -11,8 +11,8 @@ export const MPGForm = (props) => {
 
     const initBudgetMapper = {
         1: 400,
-        2: 300,
-        3: 200
+        2: 350,
+        3: 300
     }
 
     const biddingMarks = [
