@@ -11,6 +11,7 @@ import { LoadingIndicator } from './LoadingIndicator'
 import { Dialog, DialogTitle } from '@material-ui/core';
 import { Description } from './components/Description';
 import { TeamCount } from './components/TeamCount';
+import { Footer } from './Footer'
 
 function App() {
 
@@ -171,9 +172,7 @@ function App() {
           </Dialog>)}
       </div>
 
-      <div>
-
-      </div>
+      <div> { !promiseInProgress && <Footer /> } </div>
 
     </div>
   )
