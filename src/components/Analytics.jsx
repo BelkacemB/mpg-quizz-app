@@ -30,7 +30,7 @@ export const Analytics = (props) => {
         <Radar data={props.teamAnalytics} options={radarChartOptions} className='m-2' />)}
 
       <p><b>xG/match:</b> {props.suggestedTeam.reduce((a, b) => a + b.xG, 0).toFixed(2)}</p>
-      <p><b>Buts réels/match:</b> {props.suggestedTeam.reduce((a, b) => a + b.goals/b.games, 0).toFixed(2)}</p>
+      <p><b>Buts réels/match:</b> {props.suggestedTeam.reduce((a, b) => a + b.goals/b.matches, 0).toFixed(2)}</p>
       <p><b>Total buts marqués:</b> {props.suggestedTeam.reduce((a, b) => a + b.goals, 0)}</p>
 
     </div>

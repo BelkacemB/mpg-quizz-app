@@ -26,7 +26,7 @@ export const TeamTable = (props) => {
                 <tr key={player.player_name} className="border-2 rounded">
                   <td className="md:px-6 py-2 whitespace-nowrap">
                     <ReactTooltip id={`playerTooltip${player.player_name}`} type='info'>
-                      <span>{`Team: ${player.Team}, games: ${player.games}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}, MPG average rating: ${player.average}`}</span>
+                      <span>{`Team: ${player.Team}, games: ${player.matches}, goals: ${player.goals}, assists: ${player.assists}, xG: ${player.xG.toFixed(2)}, MPG average rating: ${player.average}`}</span>
                     </ReactTooltip>
                     <span data-tip data-for={`playerTooltip${player.player_name}`}>{player.player_name}</span>
                   </td>

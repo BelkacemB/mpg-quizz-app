@@ -50,14 +50,14 @@ export const MPGForm = (props) => {
             att_weight: 0.3
         },
         'Attaque+' : {
-            gk_weight: 0.07,
-            def_weight: 0.23,
+            gk_weight: 0.1,
+            def_weight: 0.2,
             mid_weight: 0.3,
             att_weight: 0.4
         },
         'Milieu+' : {
-            gk_weight: 0.07,
-            def_weight: 0.23,
+            gk_weight: 0.1,
+            def_weight: 0.2,
             mid_weight: 0.4,
             att_weight: 0.3
         },
