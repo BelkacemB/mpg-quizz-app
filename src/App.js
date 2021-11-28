@@ -26,8 +26,10 @@ function App() {
     mid_weight: 0.3,
     def_weight: 0.3,
     gk_weight: 0.1,
-    team_limit: 3
+    team_limit: 3,
+    start_prob: 0.7
   }
+  
   const [userPrefs, setUserPrefs] = useState(initPrefs)
 
   const [suggestedTeam, setSuggestedTeam] = useState([])
