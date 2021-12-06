@@ -64,7 +64,7 @@ function App() {
     };
 
     trackPromise(
-      fetch("https://nrkf97hvad.execute-api.us-east-2.amazonaws.com/preproduction/opt", requestOptions)
+      fetch(process.env.REACT_APP_BACK_URL, requestOptions)
         .then(response => response.json())
         .then(data => {
           setSuggestedTeam(data);
