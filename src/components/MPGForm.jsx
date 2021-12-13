@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, {useState} from 'react'
 import { FormControl, Button, Select, MenuItem, Slider} from '@material-ui/core';
 import { Tooltip } from '@mui/material';
 import questions from '../Questions';
@@ -8,6 +8,8 @@ import { Paper } from '@mui/material';
 import { Box } from '@mui/system';
 
 export const MPGForm = (props) => {
+
+    const [format, setFormat] = useState(props.format)
 
     const initBudgetMapper = {
         1: 400,
@@ -34,6 +36,8 @@ export const MPGForm = (props) => {
         let updatedValue = {}
         updatedValue[event.target.name] = event.target.value
         props.setUserPreferences({ ...props.initialUserPreferences, ...updatedValue })
+        if (event.target.name === 'format') 
+            setFormat(event.target.value) // Test this 
     }
 
     const handleBidSlide = (...event) => {
@@ -98,24 +102,42 @@ export const MPGForm = (props) => {
                         </Select>
                     </div>
                     <br />
+                                
+                    <div >
+                        <h2><strong>Format</strong></h2>
+                        <Select
+                            labelId="format-select-label"
+                            id="format-selected-id"
+                            value={props.initialUserPreferences.format}
+                            onChange={handleChange}
+                            name="format"
+                        >
+                            {questions.filter(q => q.questionKey === 'format')[0].answerOptions.map(answer => (
+                                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                            )
+                            )}
+                        </Select>
+                    </div>
 
                     {/* Budget */}
-                    <div className="mx-4">
-                        <Tooltip title="Plus les participants sont nombreux, plus les enchères seront aggressives">
-                        <h2><strong>Nombre de participants</strong></h2>
-                        </Tooltip>
-                        <Slider
-                            defaultValue={initBudgetKey}
-                            aria-labelledby="budget-slider"
-                            valueLabelDisplay="auto"
-                            step={1}
-                            marks={biddingMarks}
-                            min={1}
-                            max={3}
-                            onChangeCommitted={handleBidSlide}
-                            name="init_budget"
-                        />
-                    </div>
+                    { format === 'league' &&
+                        <div className="mx-4">
+                            <Tooltip title="Plus les participants sont nombreux, plus les enchères seront aggressives">
+                            <h2><strong>Nombre de participants</strong></h2>
+                            </Tooltip>
+                            <Slider
+                                defaultValue={initBudgetKey}
+                                aria-labelledby="budget-slider"
+                                valueLabelDisplay="auto"
+                                step={1}
+                                marks={biddingMarks}
+                                min={1}
+                                max={3}
+                                onChangeCommitted={handleBidSlide}
+                                name="init_budget"
+                            />
+                        </div>
+                    }
                     <div className="m-4">
                         <Tooltip title="Pour éviter de dépendre de la forme d'une seule équipe">
                             <h2><strong>Joueurs maximum par club</strong></h2>

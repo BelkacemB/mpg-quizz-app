@@ -1,5 +1,13 @@
 const questions = [
     {
+        questionText: "Format",
+        questionKey: "format",
+        answerOptions: [
+            { displayText: "Ligue", answerValue: "league"}, 
+            { displayText: "Tournoi", answerValue: "tournament"}, 
+        ],
+    },
+    {
         questionText: "Sélectionnez la ligue:",
         questionKey: "country",
         answerOptions: [

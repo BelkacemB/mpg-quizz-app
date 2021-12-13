@@ -18,6 +18,7 @@ function App() {
   const initPrefs = {
     // Default values
     league: "England",
+    format: "league",
     init_budget: 350,
     att_pref: 'average',
     mid_pref: 'average',
@@ -63,8 +64,9 @@ function App() {
       redirect: 'follow'
     };
 
+    const target_uri = userPrefs.format === 'league' ? process.env.REACT_APP_BACK_URL_LEAGUE : process.env.REACT_APP_BACK_URL_TOURNAMENT
     trackPromise(
-      fetch(process.env.REACT_APP_BACK_URL, requestOptions)
+      fetch(target_uri, requestOptions)
         .then(response => response.json())
         .then(data => {
           setSuggestedTeam(data);
