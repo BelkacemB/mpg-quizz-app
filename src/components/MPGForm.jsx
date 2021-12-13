@@ -9,7 +9,7 @@ import { Box } from '@mui/system';
 
 export const MPGForm = (props) => {
 
-    const [format, setFormat] = useState(props.format)
+    const [format, setFormat] = useState(props.initialUserPreferences.format)
 
     const initBudgetMapper = {
         1: 400,
