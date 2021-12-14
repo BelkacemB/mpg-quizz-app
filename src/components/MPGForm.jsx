@@ -36,8 +36,9 @@ export const MPGForm = (props) => {
         let updatedValue = {}
         updatedValue[event.target.name] = event.target.value
         props.setUserPreferences({ ...props.initialUserPreferences, ...updatedValue })
-        if (event.target.name === 'format') 
-            setFormat(event.target.value) // Test this 
+        if (event.target.name === 'format') {
+            setFormat(event.target.value)
+        }
     }
 
     const handleBidSlide = (...event) => {
@@ -145,9 +146,15 @@ export const MPGForm = (props) => {
                         <Select
                             labelId="team-limit-label"
                             id="team-limit-id"
-                            value={props.initialUserPreferences.team_limit}
+                            value={
+                                format === "tournament" ? 
+                                3 
+                                : 
+                                props.initialUserPreferences.team_limit
+                            }
                             onChange={handleChange}
                             name="team_limit"
+                            disabled={props.initialUserPreferences.format === 'tournament'}
                         >
                             {[2, 3, 4, 5].map(team_limit => (
                                 <MenuItem key={team_limit} value={team_limit}>{team_limit}</MenuItem>
