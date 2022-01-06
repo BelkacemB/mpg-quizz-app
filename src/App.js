@@ -12,6 +12,8 @@ import { Dialog, DialogTitle } from '@material-ui/core';
 import { Description } from './components/Description';
 import { TeamCount } from './components/TeamCount';
 import { Footer } from './Footer'
+import questions from './Questions';
+
 
 function App() {
 
@@ -28,7 +30,8 @@ function App() {
     def_weight: 0.3,
     gk_weight: 0.1,
     team_limit: 3,
-    start_prob: 0.7
+    start_prob: 0.7,
+    tactic: questions.filter(q => q.questionKey === 'tactic')[0].answerOptions[0].answerValue,
   }
   
   const [userPrefs, setUserPrefs] = useState(initPrefs)

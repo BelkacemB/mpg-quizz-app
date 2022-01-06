@@ -139,6 +139,25 @@ export const MPGForm = (props) => {
                             />
                         </div>
                     }
+
+                    { format === 'tournament' &&
+                        <div className="mx-4">
+                            <h2><strong>Tactique</strong></h2>
+                            <Select
+                            labelId="tactic-select-label"
+                            id="tactic-selected-id"
+                            value={props.initialUserPreferences.tactic}
+                            onChange={handleChange}
+                            name="tactic"
+                        >
+                            {questions.filter(q => q.questionKey === 'tactic')[0].answerOptions.map(answer => (
+                                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                            )
+                            )}
+                        </Select>
+                        </div>
+                    }
+
                     <div className="m-4">
                         <Tooltip title="Pour éviter de dépendre de la forme d'une seule équipe">
                             <h2><strong>Joueurs maximum par club</strong></h2>

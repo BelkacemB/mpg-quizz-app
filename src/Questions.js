@@ -27,6 +27,22 @@ const questions = [
             { displayText: "Expected goals & expected assists", answerValue: "expected_output"}, 
             { displayText: "Note moyenne MPG", answerValue: "average"}, 
         ]
+    },
+    {
+        questionKey: "tactic",
+        answerOptions: [
+            // displayText can be derived from answet value
+
+            { displayText: "3-4-3", answerValue: [1, 3, 4, 3]},
+            { displayText: "3-5-2", answerValue: [1, 3, 5, 2]},
+         
+            { displayText: "4-3-3", answerValue: [1, 4, 3, 3]},
+            { displayText: "4-4-2", answerValue: [1, 4, 4, 2]},
+            { displayText: "4-5-1", answerValue: [1, 4, 5, 1]},
+             
+            { displayText: "5-4-1", answerValue: [1, 5, 4, 1]},
+            { displayText: "5-3-2", answerValue: [1, 5, 3, 2]}
+        ]
     }
 ]
 
