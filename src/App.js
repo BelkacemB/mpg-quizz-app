@@ -20,20 +20,14 @@ function App() {
   const initPrefs = {
     // Default values
     league: "England",
-    format: "league",
-    init_budget: 350,
-    att_pref: 'average',
-    mid_pref: 'average',
-    def_pref: 'average',
-    att_weight: 0.3,
-    mid_weight: 0.3,
-    def_weight: 0.3,
-    gk_weight: 0.1,
+    mode: "league",
+    bid_aggression: 2,
+    target_metric: 'average',
     team_limit: 3,
-    start_prob: 0.7,
-    tactic: questions.filter(q => q.questionKey === 'tactic')[0].answerOptions[0].answerValue,
+    start_prob: 0.75,
+    formation: questions.filter(q => q.questionKey === 'formation')[0].answerOptions[0].answerValue,
   }
-  
+
   const [userPrefs, setUserPrefs] = useState(initPrefs)
 
   const [suggestedTeam, setSuggestedTeam] = useState([])
@@ -67,7 +61,7 @@ function App() {
       redirect: 'follow'
     };
 
-    const target_uri = userPrefs.format === 'league' ? process.env.REACT_APP_BACK_URL_LEAGUE : process.env.REACT_APP_BACK_URL_TOURNAMENT
+    const target_uri = process.env.REACT_APP_BACK_URL_LEAGUE
     trackPromise(
       fetch(target_uri, requestOptions)
         .then(response => response.json())
@@ -144,7 +138,7 @@ function App() {
   return (
     <div>
       <Header />
-      <div className="p-4 text-center md:flex">
+      <div className="p-4 text-center">
         <React.Fragment>
           {!promiseInProgress &&
             <div className="md:flex">
@@ -179,7 +173,7 @@ function App() {
           </Dialog>)}
       </div>
 
-      <div> { !promiseInProgress && <Footer /> } </div>
+      <div> {!promiseInProgress && <Footer />} </div>
 
     </div>
   )

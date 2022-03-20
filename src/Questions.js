@@ -1,7 +1,7 @@
 const questions = [
     {
         questionText: "Format",
-        questionKey: "format",
+        questionKey: "mode",
         answerOptions: [
             { displayText: "Ligue", answerValue: "league"}, 
             { displayText: "Tournoi", answerValue: "tournament"}, 
@@ -21,15 +21,12 @@ const questions = [
         questionKey: "criteria",
         answerOptions: [
             { displayText: "Buts", answerValue: "goals"}, 
-            { displayText: "Passes décisives", answerValue: "assists"}, 
-            { displayText: "Performance défensive", answerValue: "def_score"}, 
             { displayText: "Expected goals", answerValue: "xG"}, 
-            { displayText: "Expected goals & expected assists", answerValue: "expected_output"}, 
             { displayText: "Note moyenne MPG", answerValue: "average"}, 
         ]
     },
     {
-        questionKey: "tactic",
+        questionKey: "formation",
         answerOptions: [
             // displayText can be derived from answet value
 
