@@ -78,6 +78,10 @@ function App() {
     return depPlayers.reduce((preValue, curValue) => preValue + curValue.bid, 0)
   };
 
+  const getTotalBudget = (team) => {
+    return team.reduce((preValue, curValue) => preValue + curValue.bid, 0)
+  };
+
   const computeAggScoreForDepartmentAndCriteria = (team, criteria, department = undefined) => {
     if (department) {
       team = team.filter(p => p.mpg_position === department)
@@ -96,10 +100,10 @@ function App() {
         datasets: [{
           label: "% of bids",
           data: [
-            (getDepartmentTotal(suggestedTeam, 'A') * 100) / 500,
-            (getDepartmentTotal(suggestedTeam, 'M') * 100) / 500,
-            (getDepartmentTotal(suggestedTeam, 'D') * 100) / 500,
-            (getDepartmentTotal(suggestedTeam, 'G') * 100) / 500]
+            (getDepartmentTotal(suggestedTeam, 'A') * 100) / getTotalBudget(suggestedTeam),
+            (getDepartmentTotal(suggestedTeam, 'M') * 100) / getTotalBudget(suggestedTeam),
+            (getDepartmentTotal(suggestedTeam, 'D') * 100) / getTotalBudget(suggestedTeam),
+            (getDepartmentTotal(suggestedTeam, 'G') * 100) / getTotalBudget(suggestedTeam)]
           ,
           backgroundColor: [
             getPositionWeightedColor(0.4, 'A'),

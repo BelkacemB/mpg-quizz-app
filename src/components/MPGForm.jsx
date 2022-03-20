@@ -1,25 +1,24 @@
 /* eslint-disable react/prop-types */
-import React, {useState} from 'react'
-import { FormControl, Button, Select, MenuItem, Slider} from '@material-ui/core';
+import React, { useState } from 'react'
+import { FormControl, Button, Select, MenuItem, Slider } from '@material-ui/core';
 import { Tooltip } from '@mui/material';
 import questions from '../Questions';
 import { svgFlagPerCountry } from '../styles/styles';
-import { Paper } from '@mui/material';
-import { Box } from '@mui/system';
+import { Paper, Box } from '@mui/material';
 
 export const MPGForm = (props) => {
 
-    const [format, setFormat] = useState(props.initialUserPreferences.format)
+    const [mode, setMode] = useState(props.initialUserPreferences.mode)
 
-    const initBudgetMapper = {
-        1: 400,
-        2: 350,
-        3: 300
+    const initAggressionMapper = {
+        1: 1.5,
+        2: 2,
+        3: 2.5
     }
 
     const biddingMarks = [
         {
-            value: 1,
+            value: 1.5,
             label: '4'
         },
         {
@@ -27,7 +26,7 @@ export const MPGForm = (props) => {
             label: '6-8'
         },
         {
-            value: 3,
+            value: 2.5,
             label: '10+'
         },
     ]
@@ -36,53 +35,23 @@ export const MPGForm = (props) => {
         let updatedValue = {}
         updatedValue[event.target.name] = event.target.value
         props.setUserPreferences({ ...props.initialUserPreferences, ...updatedValue })
-        if (event.target.name === 'format') {
-            setFormat(event.target.value)
+        if (event.target.name === 'mode') {
+            setMode(event.target.value)
         }
     }
 
     const handleBidSlide = (...event) => {
         let updatedValue = {}
-        updatedValue['init_budget'] = initBudgetMapper[event[1]]
+        updatedValue['bid_aggression'] = event[1]
         props.setUserPreferences({ ...props.initialUserPreferences, ...updatedValue })
     }
 
-    const budget_types = {
-        'Equilibrée' : {
-            gk_weight: 0.1,
-            def_weight: 0.3,
-            mid_weight: 0.3,
-            att_weight: 0.3
-        },
-        'Attaque+' : {
-            gk_weight: 0.1,
-            def_weight: 0.2,
-            mid_weight: 0.3,
-            att_weight: 0.4
-        },
-        'Milieu+' : {
-            gk_weight: 0.1,
-            def_weight: 0.2,
-            mid_weight: 0.4,
-            att_weight: 0.3
-        },
-        'Défense+' : {
-            gk_weight: 0.1,
-            def_weight: 0.4,
-            mid_weight: 0.2,
-            att_weight: 0.3
-        }
 
-    }
 
-    const handleAllocationChange = (event) => {
-        props.setUserPreferences({...props.initialUserPreferences, ...budget_types[event.target.value]})
-    }
-
-    const initBudgetKey = Object.keys(initBudgetMapper).find(key => initBudgetMapper[key] === props.initialUserPreferences.init_budget)
+    const initBudgetKey = Object.keys(initAggressionMapper).find(key => initAggressionMapper[key] === props.initialUserPreferences.bid_aggression)
 
     return (
-        <Paper elevation={3} className="min-w-max p-6">
+        <div className="md:flex">
             <FormControl className="border-2 rounded" >
 
                 {/* League */}
@@ -103,17 +72,17 @@ export const MPGForm = (props) => {
                         </Select>
                     </div>
                     <br />
-                                
+
                     <div >
-                        <h2><strong>Format</strong></h2>
+                        <h2><strong>Mode</strong></h2>
                         <Select
                             labelId="format-select-label"
                             id="format-selected-id"
-                            value={props.initialUserPreferences.format}
+                            value={props.initialUserPreferences.mode}
                             onChange={handleChange}
-                            name="format"
+                            name="mode"
                         >
-                            {questions.filter(q => q.questionKey === 'format')[0].answerOptions.map(answer => (
+                            {questions.filter(q => q.questionKey === 'mode')[0].answerOptions.map(answer => (
                                 <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
                             )
                             )}
@@ -121,40 +90,40 @@ export const MPGForm = (props) => {
                     </div>
 
                     {/* Budget */}
-                    { format === 'league' &&
+                    {mode === 'league' &&
                         <div className="mx-4">
                             <Tooltip title="Plus les participants sont nombreux, plus les enchères seront aggressives">
-                            <h2><strong>Nombre de participants</strong></h2>
+                                <h2><strong>Nombre de participants</strong></h2>
                             </Tooltip>
                             <Slider
                                 defaultValue={initBudgetKey}
                                 aria-labelledby="budget-slider"
                                 valueLabelDisplay="auto"
-                                step={1}
+                                step={0.5}
                                 marks={biddingMarks}
-                                min={1}
-                                max={3}
+                                min={1.5}
+                                max={2.5}
                                 onChangeCommitted={handleBidSlide}
                                 name="init_budget"
                             />
                         </div>
                     }
 
-                    { format === 'tournament' &&
+                    {mode === 'tournament' &&
                         <div className="mx-4">
                             <h2><strong>Tactique</strong></h2>
                             <Select
-                            labelId="tactic-select-label"
-                            id="tactic-selected-id"
-                            value={props.initialUserPreferences.tactic}
-                            onChange={handleChange}
-                            name="tactic"
-                        >
-                            {questions.filter(q => q.questionKey === 'tactic')[0].answerOptions.map(answer => (
-                                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                            )
-                            )}
-                        </Select>
+                                labelId="tactic-select-label"
+                                id="tactic-selected-id"
+                                value={props.initialUserPreferences.formation}
+                                onChange={handleChange}
+                                name="formation"
+                            >
+                                {questions.filter(q => q.questionKey === 'formation')[0].answerOptions.map(answer => (
+                                    <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                                )
+                                )}
+                            </Select>
                         </div>
                     }
 
@@ -166,104 +135,42 @@ export const MPGForm = (props) => {
                             labelId="team-limit-label"
                             id="team-limit-id"
                             value={
-                                format === "tournament" ? 
-                                3 
-                                : 
-                                props.initialUserPreferences.team_limit
+                                mode === "tournament" ?
+                                    3
+                                    :
+                                    props.initialUserPreferences.team_limit
                             }
                             onChange={handleChange}
                             name="team_limit"
-                            disabled={props.initialUserPreferences.format === 'tournament'}
+                            disabled={props.initialUserPreferences.mode === 'tournament'}
                         >
                             {[2, 3, 4, 5].map(team_limit => (
                                 <MenuItem key={team_limit} value={team_limit}>{team_limit}</MenuItem>
                             ))}
-                        </Select>  
+                        </Select>
+                        <Box className="my-2">
+                            <div className='mx-2'>
+                                <h2><strong>Critère</strong></h2>
+
+                                <Select
+                                    labelId="target-metric-label"
+                                    id="target-metric-id"
+                                    name="target_metric"
+                                    value={props.initialUserPreferences.target_metric}
+                                    onChange={handleChange}
+                                >
+                                    {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                                        <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                                    )
+                                    )}
+                                </Select>
+
+
+                            </div>
+                        </Box>
                     </div>
                 </Paper>
-                <Paper elevation={2} className='my-2'>
-                <div id="departments" >
-                    <div className='m-2'>
-                        <p className="text-lg font-bold">Critères</p>
-                    </div>
 
-                    {/* Defence prefs */}
-                    <Box className="my-2">
-                        <div className='mx-2'>
-                            <h2><strong>Défense</strong></h2>
-
-                            <Select
-                                labelId="def-pref-label"
-                                id="def-prefs-id"
-                                name="def_pref"
-                                value={props.initialUserPreferences.def_pref}
-                                onChange={handleChange}
-                            >
-                                {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                                    <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                                )
-                                )}
-                            </Select>
-
-
-                        </div>
-                    </Box>
-
-                    {/* Midfield prefs */}
-                    <Box className="my-2">
-                        <div className='mx-2'>
-                            <h2><strong>Milieu</strong></h2>
-                            <Select
-                                labelId="mid-pref-label"
-                                id="mid-prefs-id"
-                                name="mid_pref"
-                                value={props.initialUserPreferences.mid_pref}
-                                onChange={handleChange}
-                            >
-                                {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                                    <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                                )
-                                )}
-                            </Select>
-                        </div>
-                    </Box>
-
-                    <Box className="my-2">
-                        <div className='mx-2'>
-                            <h2><strong>Attaque</strong></h2>
-                            <Select
-                                labelId="att-pref-label"
-                                id="att-prefs-id"
-                                value={props.initialUserPreferences.att_pref}
-                                onChange={handleChange}
-                                name="att_pref"
-                            >
-                                {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                                    <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                                )
-                                )}
-                            </Select>
-                        </div>
-                    </Box>
-                </div>
-                </Paper>
-                <div className="mx-4">
-                    <Tooltip title="Quel département prioriser pour les enchères ?">
-                        <h2><strong>Allocation budget</strong></h2>
-                    </Tooltip>
-                    <Select
-                        labelId="allocation-label"
-                        id="allocation-id"
-                        name="allocation"
-                        onChange={handleAllocationChange}
-                        defaultValue={'Equilibrée'}
-                    >
-                        {['Equilibrée', 'Attaque+', 'Milieu+', 'Défense+'].map(answer => (
-                                    <MenuItem key={answer} value={answer}>{answer}</MenuItem>
-                                )
-                                )}
-                    </Select>
-                </div>
                 <br />
                 <Button
                     variant="contained"
@@ -272,9 +179,9 @@ export const MPGForm = (props) => {
                     onClick={props.onSubmit}
                     style={{ maxWidth: '150px', alignSelf: 'center', marginBottom: '20px' }}
                 >
-                    Build 🚀
+                    Construire 🚀
                 </Button>
             </FormControl>
-        </Paper>
+        </div>
     )
 }

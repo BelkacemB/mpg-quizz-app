@@ -23,7 +23,7 @@ export const TeamCount = (props) => {
                     <div className="bg-gray-100 border-2 border-gray-200 rounded-lg p-2">
                         <div className="md:flex justify-center">
                             <div className="md:w-1/2">
-                                <h3 className="text-center">{team}</h3>
+                                <h3 className="text-center">{team === '0' ? 'Autre' : team}</h3>
                             </div>
                             <div className="md:w-1/2">
                                 <h3 className="text-center">{nbPlayersPerTeam[team]}</h3>
