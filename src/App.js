@@ -41,7 +41,8 @@ function App() {
     setModalOpen(false)
   }
 
-  const handlePrefSubmit = () => {
+  const handlePrefSubmit = (event) => {
+    event.preventDefault()
     setSuggestedTeam([])
     setExpenseData({})
     setTeamAnalytics({})

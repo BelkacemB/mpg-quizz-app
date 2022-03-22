@@ -3,8 +3,8 @@ const questions = [
         questionText: "Format",
         questionKey: "mode",
         answerOptions: [
-            { displayText: "Ligue", answerValue: "league"}, 
-            { displayText: "Tournoi", answerValue: "tournament"}, 
+            { displayText: "League", answerValue: "league"}, 
+            { displayText: "Tournament", answerValue: "tournament"}, 
         ],
     },
     {
