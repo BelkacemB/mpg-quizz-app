@@ -38,6 +38,8 @@ export const MPGForm = (props) => {
         if (event.target.name === 'formation') {
             let formationStr = event.target.value// .slice(1, -1)
             updatedValue[event.target.name] = formationStr.split(',').map(c => parseInt(c))
+        } else if (event.target.name === 'team_limit') {
+            updatedValue[event.target.name] = parseInt(event.target.value)
         } else {
             updatedValue[event.target.name] = event.target.value
         }
@@ -95,7 +97,7 @@ export const MPGForm = (props) => {
                         </div>
 
                         {mode === 'tournament' &&
-                            <div className="flex flex-col pt-4 mb-12">
+                            <div className="flex flex-col pt-4 mb-4">
                                 <div className="flex relative ">
                                     <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Tactic</span>
                                     <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="formation" value={props.initialUserPreferences.formation} onChange={handleChange}>
@@ -107,9 +109,9 @@ export const MPGForm = (props) => {
                                 </div>
                             </div>}
                         {mode === 'league' &&
-                            <div className="flex flex-col pt-4 mb-12">
+                            <div className="flex flex-col pt-4 mb-4">
                                 <div className="flex relative ">
-                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Size of league</span>
+                                    <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Size of league</span>
 
                                     {/* Budget */}
 
@@ -133,7 +135,7 @@ export const MPGForm = (props) => {
                             </div>
                         }
 
-                        <div className="flex flex-col pt-4 mb-12">
+                        <div className="flex flex-col pt-4 mb-4">
                             <div className="flex relative ">
                                 <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Target metric</span>
                                 <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="target_metric" value={props.initialUserPreferences.target_metric} onChange={handleChange}>
@@ -141,6 +143,17 @@ export const MPGForm = (props) => {
                                         <option key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</option>
                                     )
                                     )}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col pt-4 mb-4">
+                            <div className="flex relative ">
+                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Max players/club</span>
+                                <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="team_limit" value={props.initialUserPreferences.team_limit} onChange={handleChange}>
+                                    {[1, 2, 3, 4, 5].map(team_limit => (
+                                        <option key={team_limit} value={team_limit}>{team_limit}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
