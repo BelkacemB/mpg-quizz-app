@@ -109,7 +109,8 @@ export const MPGForm = (props) => {
                         {mode === 'league' &&
                             <div className="flex flex-col pt-4 mb-12">
                                 <div className="flex relative ">
-                                    <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Participants</span>
+                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Size of league</span>
+
                                     {/* Budget */}
 
                                     <div className="flex-1 appearance-none  w-full px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
@@ -124,6 +125,7 @@ export const MPGForm = (props) => {
                                             max={2.5}
                                             onChangeCommitted={handleBidSlide}
                                             name="init_budget"
+                                            color='secondary'
                                         />
                                     </div>
 
@@ -145,7 +147,7 @@ export const MPGForm = (props) => {
 
 
 
-                        <button type="submit" className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-black shadow-md hover:text-black hover:bg-white focus:outline-none focus:ring-2" onSubmit={props.onSubmit} onClick={props.onSubmit}>
+                        <button type="submit" className="w-1/2  ml-auto px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-black shadow-md hover:text-black hover:bg-white focus:outline-none focus:ring-2" onSubmit={props.onSubmit} onClick={props.onSubmit}>
                             <span className="w-full">
                                 Build 🚀
                             </span>
