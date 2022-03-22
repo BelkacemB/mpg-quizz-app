@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
-import { FormControl, Button, Select, MenuItem, Slider } from '@material-ui/core';
-import { Tooltip } from '@mui/material';
+import React from 'react'
+import { useState } from 'react'
 import questions from '../Questions';
-import { svgFlagPerCountry } from '../styles/styles';
-import { Paper, Box } from '@mui/material';
+import { Slider } from '@mui/material';
+
+/* Form Tailwind element from: https://www.tailwind-kit.com/components/form */
 
 export const MPGForm = (props) => {
-
     const [mode, setMode] = useState(props.initialUserPreferences.mode)
 
     const initAggressionMapper = {
@@ -31,9 +30,17 @@ export const MPGForm = (props) => {
         },
     ]
 
+    const initBudgetKey = Object.keys(initAggressionMapper).find(key => initAggressionMapper[key] === props.initialUserPreferences.bid_aggression)
+
     const handleChange = (event) => {
         let updatedValue = {}
-        updatedValue[event.target.name] = event.target.value
+        // TODO Find a better way to do this
+        if (event.target.name === 'formation') {
+            let formationStr = event.target.value// .slice(1, -1)
+            updatedValue[event.target.name] = formationStr.split(',').map(c => parseInt(c))
+        } else {
+            updatedValue[event.target.name] = event.target.value
+        }
         props.setUserPreferences({ ...props.initialUserPreferences, ...updatedValue })
         if (event.target.name === 'mode') {
             setMode(event.target.value)
@@ -46,142 +53,110 @@ export const MPGForm = (props) => {
         props.setUserPreferences({ ...props.initialUserPreferences, ...updatedValue })
     }
 
-
-
-    const initBudgetKey = Object.keys(initAggressionMapper).find(key => initAggressionMapper[key] === props.initialUserPreferences.bid_aggression)
-
     return (
-        <div className="md:flex">
-            <FormControl className="border-2 rounded" >
 
-                {/* League */}
-                <Paper elevation={2} className="my-2">
-                    <div >
-                        <h2><strong>Ligue</strong></h2>
-                        <Select
-                            labelId="league-select-label"
-                            id="league-selected-id"
-                            value={props.initialUserPreferences.league}
-                            onChange={handleChange}
-                            name="league"
-                        >
-                            {questions.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
-                                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText} {svgFlagPerCountry[answer.answerValue]}</MenuItem>
-                            )
-                            )}
-                        </Select>
-                    </div>
-                    <br />
+        <div className="flex flex-wrap w-full">
+            <div className="flex flex-col w-full md:w-1/2">
+                <div className="flex justify-center pt-12 pb-12 md:justify-start md:pl-12 md:-mb-24">
+                    <img src="/soccer_ball2.svg" alt="MPG Scout Logo" height="10" width="60" />
 
-                    <div >
-                        <h2><strong>Mode</strong></h2>
-                        <Select
-                            labelId="format-select-label"
-                            id="format-selected-id"
-                            value={props.initialUserPreferences.mode}
-                            onChange={handleChange}
-                            name="mode"
-                        >
-                            {questions.filter(q => q.questionKey === 'mode')[0].answerOptions.map(answer => (
-                                <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                            )
-                            )}
-                        </Select>
-                    </div>
+                    <a href="#" className="p-4 text-xl font-bold text-black bg-white h">
+                        MPG Scout
+                    </a>
+                </div>
+                <div className="flex flex-col justify-center px-8 pt-8 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32">
+                    <p className="text-3xl text-center">
+                        Build your fantasy football team
+                    </p>
+                    <form className="flex flex-col pt-3 md:pt-8">
+                        <div className="flex flex-col pt-4">
+                            <div className="flex relative ">
+                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Format</span>
 
-                    {/* Budget */}
-                    {mode === 'league' &&
-                        <div className="mx-4">
-                            <Tooltip title="Plus les participants sont nombreux, plus les enchères seront aggressives">
-                                <h2><strong>Nombre de participants</strong></h2>
-                            </Tooltip>
-                            <Slider
-                                defaultValue={initBudgetKey}
-                                aria-labelledby="budget-slider"
-                                valueLabelDisplay="auto"
-                                step={0.5}
-                                marks={biddingMarks}
-                                min={1.5}
-                                max={2.5}
-                                onChangeCommitted={handleBidSlide}
-                                name="init_budget"
-                            />
+                                <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="mode" value={mode} onChange={handleChange}>
+                                    {questions.filter(q => q.questionKey === 'mode')[0].answerOptions.map(answer => (
+                                        <option key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
-                    }
 
-                    {mode === 'tournament' &&
-                        <div className="mx-4">
-                            <h2><strong>Tactique</strong></h2>
-                            <Select
-                                labelId="tactic-select-label"
-                                id="tactic-selected-id"
-                                value={props.initialUserPreferences.formation}
-                                onChange={handleChange}
-                                name="formation"
-                            >
-                                {questions.filter(q => q.questionKey === 'formation')[0].answerOptions.map(answer => (
-                                    <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
-                                )
-                                )}
-                            </Select>
-                        </div>
-                    }
+                        <div className="flex flex-col pt-4 mb-12">
+                            <div className="flex relative ">
+                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>League</span>
 
-                    <div className="m-4">
-                        <Tooltip title="Pour éviter de dépendre de la forme d'une seule équipe">
-                            <h2><strong>Joueurs maximum par club</strong></h2>
-                        </Tooltip>
-                        <Select
-                            labelId="team-limit-label"
-                            id="team-limit-id"
-                            value={
-                                mode === "tournament" ?
-                                    3
-                                    :
-                                    props.initialUserPreferences.team_limit
-                            }
-                            onChange={handleChange}
-                            name="team_limit"
-                            disabled={props.initialUserPreferences.mode === 'tournament'}
-                        >
-                            {[2, 3, 4, 5].map(team_limit => (
-                                <MenuItem key={team_limit} value={team_limit}>{team_limit}</MenuItem>
-                            ))}
-                        </Select>
-                        <Box className="my-2">
-                            <div className='mx-2'>
-                                <h2><strong>Critère</strong></h2>
-
-                                <Select
-                                    labelId="target-metric-label"
-                                    id="target-metric-id"
-                                    name="target_metric"
-                                    value={props.initialUserPreferences.target_metric}
-                                    onChange={handleChange}
-                                >
-                                    {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                                        <MenuItem key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</MenuItem>
+                                <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="league" value={props.initialUserPreferences.league} onChange={handleChange}>
+                                    {questions.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
+                                        <option key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</option>
                                     )
                                     )}
-                                </Select>
-
-
+                                </select>
                             </div>
-                        </Box>
-                    </div>
-                </Paper>
+                        </div>
 
-                <br />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    onClick={props.onSubmit}
-                    style={{ maxWidth: '150px', alignSelf: 'center', marginBottom: '20px' }}
-                >
-                    Construire 🚀
-                </Button>
-            </FormControl>
+                        {mode === 'tournament' &&
+                            <div className="flex flex-col pt-4 mb-12">
+                                <div className="flex relative ">
+                                    <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Tactic</span>
+                                    <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="formation" value={props.initialUserPreferences.formation} onChange={handleChange}>
+                                        {questions.filter(q => q.questionKey === 'formation')[0].answerOptions.map(answer => (
+                                            <option key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</option>
+                                        )
+                                        )}
+                                    </select>
+                                </div>
+                            </div>}
+                        {mode === 'league' &&
+                            <div className="flex flex-col pt-4 mb-12">
+                                <div className="flex relative ">
+                                    <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Participants</span>
+                                    {/* Budget */}
+
+                                    <div className="flex-1 appearance-none  w-full px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+
+                                        <Slider
+                                            defaultValue={initBudgetKey}
+                                            aria-labelledby="budget-slider"
+                                            valueLabelDisplay="auto"
+                                            step={0.5}
+                                            marks={biddingMarks}
+                                            min={1.5}
+                                            max={2.5}
+                                            onChangeCommitted={handleBidSlide}
+                                            name="init_budget"
+                                        />
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                        <div className="flex flex-col pt-4 mb-12">
+                            <div className="flex relative ">
+                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Target metric</span>
+                                <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="target_metric" value={props.initialUserPreferences.target_metric} onChange={handleChange}>
+                                    {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
+                                        <option key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</option>
+                                    )
+                                    )}
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                        <button type="submit" className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-black shadow-md hover:text-black hover:bg-white focus:outline-none focus:ring-2" onSubmit={props.onSubmit} onClick={props.onSubmit}>
+                            <span className="w-full">
+                                Build 🚀
+                            </span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div className="w-1/2 shadow-2xl">
+                <img className="hidden object-cover w-full h-screen md:block" src="/goat.jpg" />
+            </div>
         </div>
+
     )
 }

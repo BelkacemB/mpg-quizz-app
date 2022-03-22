@@ -1,6 +1,5 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { Header } from './Header';
 import { trackPromise } from 'react-promise-tracker'
 import { usePromiseTracker } from 'react-promise-tracker';
 import { getPositionWeightedColor } from './styles/styles'
@@ -9,7 +8,6 @@ import { TeamTable } from './components/TeamTable';
 import { Analytics } from './components/Analytics';
 import { LoadingIndicator } from './LoadingIndicator'
 import { Dialog, DialogTitle } from '@material-ui/core';
-import { Description } from './components/Description';
 import { TeamCount } from './components/TeamCount';
 import { Footer } from './Footer'
 import questions from './Questions';
@@ -43,7 +41,8 @@ function App() {
     setModalOpen(false)
   }
 
-  const handlePrefSubmit = () => {
+  const handlePrefSubmit = (event) => {
+    event.preventDefault()
     setSuggestedTeam([])
     setExpenseData({})
     setTeamAnalytics({})
@@ -141,12 +140,10 @@ function App() {
 
   return (
     <div>
-      <Header />
       <div className="p-4 text-center">
         <React.Fragment>
           {!promiseInProgress &&
             <div className="md:flex">
-              <Description />
               <MPGForm initialUserPreferences={userPrefs} setUserPreferences={setUserPrefs} onSubmit={handlePrefSubmit} />
             </div>
           }

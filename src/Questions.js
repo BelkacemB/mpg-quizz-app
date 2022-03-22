@@ -3,26 +3,26 @@ const questions = [
         questionText: "Format",
         questionKey: "mode",
         answerOptions: [
-            { displayText: "Ligue", answerValue: "league"}, 
-            { displayText: "Tournoi", answerValue: "tournament"}, 
+            { displayText: "League", answerValue: "league"}, 
+            { displayText: "Tournament", answerValue: "tournament"}, 
         ],
     },
     {
         questionText: "Sélectionnez la ligue:",
         questionKey: "country",
         answerOptions: [
-            { displayText: "Premier League", answerValue: "England"}, 
-            { displayText: "Ligue 1", answerValue: "France"}, 
-            { displayText: "Serie A", answerValue: "Italy"}, 
-            { displayText: "La Liga", answerValue: "Spain"}, 
+            { displayText: "Premier League 🇬🇧", answerValue: "England"}, 
+            { displayText: "Ligue 1 🇫🇷", answerValue: "France"}, 
+            { displayText: "Serie A 🇮🇹", answerValue: "Italy"}, 
+            { displayText: "La Liga 🇪🇸", answerValue: "Spain"}, 
         ]
     },
     {
         questionKey: "criteria",
         answerOptions: [
-            { displayText: "Buts", answerValue: "goals"}, 
+            { displayText: "Goals", answerValue: "goals"}, 
             { displayText: "Expected goals", answerValue: "xG"}, 
-            { displayText: "Note moyenne MPG", answerValue: "average"}, 
+            { displayText: "Average MPG rating", answerValue: "average"}, 
         ]
     },
     {
