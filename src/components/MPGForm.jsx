@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { useState } from 'react'
-import questions from '../Questions';
 import { Slider } from '@mui/material';
+import { SelectQuestion } from './form/SelectQuestion';
 
 /* Form Tailwind element from: https://www.tailwind-kit.com/components/form */
 
@@ -71,43 +71,13 @@ export const MPGForm = (props) => {
                         Build your fantasy football team
                     </p>
                     <form className="flex flex-col pt-3 md:pt-8">
-                        <div className="flex flex-col pt-4">
-                            <div className="flex relative ">
-                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Format</span>
+                        <SelectQuestion questionKey="mode" name="mode" displayName="Format" handler={handleChange} init={props.initialUserPreferences.mode} />
 
-                                <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="mode" value={mode} onChange={handleChange}>
-                                    {questions.filter(q => q.questionKey === 'mode')[0].answerOptions.map(answer => (
-                                        <option key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col pt-4 mb-12">
-                            <div className="flex relative ">
-                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>League</span>
-
-                                <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="league" value={props.initialUserPreferences.league} onChange={handleChange}>
-                                    {questions.filter(q => q.questionKey === 'country')[0].answerOptions.map(answer => (
-                                        <option key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</option>
-                                    )
-                                    )}
-                                </select>
-                            </div>
-                        </div>
+                        <SelectQuestion questionKey="country" name="league" displayName="League" handler={handleChange} init={props.initialUserPreferences.league} />
 
                         {mode === 'tournament' &&
-                            <div className="flex flex-col pt-4 mb-4">
-                                <div className="flex relative ">
-                                    <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Tactic</span>
-                                    <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="formation" value={props.initialUserPreferences.formation} onChange={handleChange}>
-                                        {questions.filter(q => q.questionKey === 'formation')[0].answerOptions.map(answer => (
-                                            <option key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</option>
-                                        )
-                                        )}
-                                    </select>
-                                </div>
-                            </div>}
+                        <SelectQuestion questionKey="formation" name="formation" displayName="Tactic" handler={handleChange} init={props.initialUserPreferences.formation} />
+                            }
                         {mode === 'league' &&
                             <div className="flex flex-col pt-4 mb-4">
                                 <div className="flex relative ">
@@ -135,17 +105,7 @@ export const MPGForm = (props) => {
                             </div>
                         }
 
-                        <div className="flex flex-col pt-4 mb-4">
-                            <div className="flex relative ">
-                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Target metric</span>
-                                <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="target_metric" value={props.initialUserPreferences.target_metric} onChange={handleChange}>
-                                    {questions.filter(q => q.questionKey === 'criteria')[0].answerOptions.map(answer => (
-                                        <option key={answer.answerValue} value={answer.answerValue}>{answer.displayText}</option>
-                                    )
-                                    )}
-                                </select>
-                            </div>
-                        </div>
+                        <SelectQuestion questionKey="target_metric" name="target_metric" displayName="Target metric" handler={handleChange} init={props.initialUserPreferences.target_metric} />
 
                         <div className="flex flex-col pt-4 mb-4">
                             <div className="flex relative ">
