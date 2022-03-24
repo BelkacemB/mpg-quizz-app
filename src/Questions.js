@@ -1,3 +1,5 @@
+
+
 const questions = [
     {
         questionText: "Format",
@@ -11,10 +13,10 @@ const questions = [
         questionText: "Sélectionnez la ligue:",
         questionKey: "country",
         answerOptions: [
-            { displayText: "Premier League 🇬🇧", answerValue: "England"}, 
-            { displayText: "Ligue 1 🇫🇷", answerValue: "France"}, 
-            { displayText: "Serie A 🇮🇹", answerValue: "Italy"}, 
-            { displayText: "La Liga 🇪🇸", answerValue: "Spain"}, 
+            { displayText: "Premier League", answerValue: "England"}, 
+            { displayText: "Ligue 1", answerValue: "France"}, 
+            { displayText: "Serie A", answerValue: "Italy"}, 
+            { displayText: "La Liga", answerValue: "Spain"}, 
         ]
     },
     {
@@ -39,6 +41,16 @@ const questions = [
              
             { displayText: "5-4-1", answerValue: [1, 5, 4, 1]},
             { displayText: "5-3-2", answerValue: [1, 5, 3, 2]}
+        ]
+    },
+    {
+        questionKey: "team_limit",
+        answerOptions: [
+            { displayText: "1", answerValue: 1},
+            { displayText: "2", answerValue:2},
+            { displayText: "3", answerValue: 3},
+            { displayText: "4", answerValue: 4},
+            { displayText: "5", answerValue: 5}
         ]
     }
 ]
