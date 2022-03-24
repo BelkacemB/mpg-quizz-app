@@ -34,15 +34,9 @@ export const MPGForm = (props) => {
 
     const handleChange = (event) => {
         let updatedValue = {}
-        // TODO Find a better way to do this
-        if (event.target.name === 'formation') {
-            let formationStr = event.target.value// .slice(1, -1)
-            updatedValue[event.target.name] = formationStr.split(',').map(c => parseInt(c))
-        } else if (event.target.name === 'team_limit') {
-            updatedValue[event.target.name] = parseInt(event.target.value)
-        } else {
-            updatedValue[event.target.name] = event.target.value
-        }
+
+        updatedValue[event.target.name] = event.target.value
+        
         props.setUserPreferences({ ...props.initialUserPreferences, ...updatedValue })
         if (event.target.name === 'mode') {
             setMode(event.target.value)
@@ -107,18 +101,7 @@ export const MPGForm = (props) => {
 
                         <SelectQuestion questionKey="target_metric" name="target_metric" displayName="Target metric" handler={handleChange} init={props.initialUserPreferences.target_metric} />
 
-                        <div className="flex flex-col pt-4 mb-4">
-                            <div className="flex relative ">
-                                <span className='flex-1 appearance-none italic w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent'>Max players/club</span>
-                                <select className="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="team_limit" value={props.initialUserPreferences.team_limit} onChange={handleChange}>
-                                    {[1, 2, 3, 4, 5].map(team_limit => (
-                                        <option key={team_limit} value={team_limit}>{team_limit}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-
-
+                        <SelectQuestion questionKey="team_limit" name="team_limit" displayName="Max players/club" handler={handleChange} init={props.initialUserPreferences.team_limit} />
 
                         <button type="submit" className="w-1/2  ml-auto px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-black shadow-md hover:text-black hover:bg-white focus:outline-none focus:ring-2" onSubmit={props.onSubmit} onClick={props.onSubmit}>
                             <span className="w-full">
