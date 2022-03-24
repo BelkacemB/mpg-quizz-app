@@ -18,7 +18,7 @@ const questions = [
         ]
     },
     {
-        questionKey: "criteria",
+        questionKey: "target_metric",
         answerOptions: [
             { displayText: "Goals", answerValue: "goals"}, 
             { displayText: "Expected goals", answerValue: "xG"}, 
