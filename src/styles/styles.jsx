@@ -5,6 +5,8 @@ import ItalyIcon from '../img/italy.svg'
 import SpainIcon from '../img/spain.svg'
 import EnglandIcon from '../img/england.svg'
 
+export const iconColor = ''
+
 export const getPositionWeightedBackgroundColor = (weight, position) => {
     let defStyle = {'background-color': `hsl(${positionColorMap[position]},100%,65%, ${weight})`};
     return defStyle;
