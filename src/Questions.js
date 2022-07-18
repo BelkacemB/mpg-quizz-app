@@ -22,9 +22,7 @@ const questions = [
     {
         questionKey: "target_metric",
         answerOptions: [
-            { displayText: "Goals", answerValue: "goals"}, 
             { displayText: "Expected goals", answerValue: "xG"}, 
-            { displayText: "Average MPG rating", answerValue: "average"}, 
         ]
     },
     {

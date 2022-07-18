@@ -20,7 +20,7 @@ function App() {
     league: "England",
     mode: "league",
     bid_aggression: 2,
-    target_metric: 'average',
+    target_metric: 'xG',
     team_limit: 3,
     start_prob: 0.75,
     formation: questions.filter(q => q.questionKey === 'formation')[0].answerOptions[0].answerValue,
